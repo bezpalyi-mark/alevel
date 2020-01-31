@@ -1,5 +1,7 @@
 package com.alevel.java.nix.homeworks.january29;
 
+import com.alevel.java.nix.homeworks.january29.interfaces.SortHandler;
+
 public class BubbleSort implements SortHandler {
 
     @Override

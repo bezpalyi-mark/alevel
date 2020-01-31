@@ -1,4 +1,4 @@
-package com.alevel.java.nix.homeworks.january29;
+package com.alevel.java.nix.homeworks.january29.interfaces;
 
 import java.util.List;
 
