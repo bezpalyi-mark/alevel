@@ -1,6 +1,6 @@
 package com.alevel.java.nix.homeworks.january29;
 
-import com.alevel.java.nix.homeworks.january29.interfaces.SortHandler;
+import com.alevel.java.nix.homeworks.january29.implementation.BubbleSort;
 import com.alevel.java.nix.homeworks.january29.services.BubbleSortService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

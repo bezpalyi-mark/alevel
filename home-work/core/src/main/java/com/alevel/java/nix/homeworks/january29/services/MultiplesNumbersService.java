@@ -1,6 +1,6 @@
 package com.alevel.java.nix.homeworks.january29.services;
 
-import com.alevel.java.nix.homeworks.january29.interfaces.MultiplesOfNumberHandler;
+import com.alevel.java.nix.homeworks.january29.MultiplesOfNumberHandler;
 
 public class MultiplesNumbersService {
 

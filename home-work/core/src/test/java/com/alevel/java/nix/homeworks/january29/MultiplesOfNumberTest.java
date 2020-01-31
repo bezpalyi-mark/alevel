@@ -1,6 +1,6 @@
 package com.alevel.java.nix.homeworks.january29;
 
-import com.alevel.java.nix.homeworks.january29.interfaces.MultiplesOfNumberHandler;
+import com.alevel.java.nix.homeworks.january29.implementation.MultiplesNumbers;
 import com.alevel.java.nix.homeworks.january29.services.MultiplesNumbersService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
 package com.alevel.java.nix.homeworks.january29;
 
-import com.alevel.java.nix.homeworks.january29.interfaces.MinMaxHandler;
+import com.alevel.java.nix.homeworks.january29.implementation.MinMax;
 import com.alevel.java.nix.homeworks.january29.services.MinMaxService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
 package com.alevel.java.nix.homeworks.january29.services;
 
-import com.alevel.java.nix.homeworks.january29.interfaces.SortHandler;
+import com.alevel.java.nix.homeworks.january29.SortHandler;
 
 public class BubbleSortService {
     private final SortHandler sortHandler;

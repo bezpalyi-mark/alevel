@@ -1,6 +1,6 @@
-package com.alevel.java.nix.homeworks.january29;
+package com.alevel.java.nix.homeworks.january29.implementation;
 
-import com.alevel.java.nix.homeworks.january29.interfaces.MinMaxHandler;
+import com.alevel.java.nix.homeworks.january29.MinMaxHandler;
 
 import java.util.ArrayList;
 import java.util.List;
