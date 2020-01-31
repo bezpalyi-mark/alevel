@@ -8,7 +8,7 @@ import java.util.List;
 public class MinMax implements MinMaxHandler {
 
     @Override
-    public List<Integer> MinMaxInArray(int[] array) {
+    public List<Integer> minMaxInArray(int[] array) {
         List<Integer> minMaxValues = new ArrayList<>();
 
         int min = array[0];

@@ -12,7 +12,7 @@ public class MinMaxService {
     }
 
     public List<Integer> getMinMax(int[] array) {
-        return minMaxHandler.MinMaxInArray(array);
+        return minMaxHandler.minMaxInArray(array);
     }
 
 }
