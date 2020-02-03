@@ -6,10 +6,20 @@ public class Numbers implements NumberHandler {
 
     @Override
     public String fizzBuzzOfNumber(final long number, boolean inverse) {
-        final int length = (int) (Math.log10(number) + 1);
+        long workNumber = number;
+
+        if(workNumber < 0) {
+            workNumber = (~workNumber) + 1;
+        }
+
+        if(workNumber == 0) {
+            return "fizzbuzz ";
+        }
+
+        final int length = (int) (Math.log10(workNumber) + 1);
         final int capacity = 5000;
         StringBuilder stringBuilder = new StringBuilder(capacity);
-        long workNumber = number;
+
         if (inverse) {
             for (int i = 0; i < length; i++) {
                 stringBuilder.append(handleDigit((int) workNumber));
@@ -24,6 +34,7 @@ public class Numbers implements NumberHandler {
                 workNumber = number;
             }
         }
+
         return stringBuilder.toString();
     }
 
