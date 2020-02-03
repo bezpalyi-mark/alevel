@@ -40,11 +40,16 @@ public class Numbers implements NumberHandler {
 
     @Override
     public int countBitsEstablishedToOne(long number) {
-        return 0;
+        long mask = 0b00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000001;
+        final int length = 64;
+        int count = 0;
+        for(int i = 0; i < length; i++) {
+            if((number & mask) != 0) {
+                count++;
+            }
+            mask <<= 1;
+        }
+        return count;
     }
 
-    public static void main(String[] args) {
-        Numbers numbers = new Numbers();
-        System.out.println(numbers.fizzBuzzOfNumber(915762, false));
-    }
 }
