@@ -1,7 +1,7 @@
-package com.alevel.java.nix.homeworks.january29;
+package com.alevel.java.nix.homeworks.lesson3;
 
-import com.alevel.java.nix.homeworks.january29.implementation.BubbleSort;
-import com.alevel.java.nix.homeworks.january29.services.BubbleSortService;
+import com.alevel.java.nix.homeworks.lesson3.implementation.BubbleSort;
+import com.alevel.java.nix.homeworks.lesson3.services.BubbleSortService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

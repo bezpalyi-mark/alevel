@@ -1,6 +1,6 @@
-package com.alevel.java.nix.homeworks.january29.implementation;
+package com.alevel.java.nix.homeworks.lesson3.implementation;
 
-import com.alevel.java.nix.homeworks.january29.MultiplesOfNumberHandler;
+import com.alevel.java.nix.homeworks.lesson3.MultiplesOfNumberHandler;
 
 import java.util.ArrayList;
 import java.util.List;

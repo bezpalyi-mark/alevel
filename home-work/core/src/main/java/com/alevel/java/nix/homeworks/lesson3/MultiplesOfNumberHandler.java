@@ -1,4 +1,4 @@
-package com.alevel.java.nix.homeworks.january29;
+package com.alevel.java.nix.homeworks.lesson3;
 
 public interface MultiplesOfNumberHandler {
     int[] getArrayWithMultiplesNumbers(int[] array, int number);

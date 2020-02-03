@@ -1,6 +1,6 @@
-package com.alevel.java.nix.homeworks.january29.services;
+package com.alevel.java.nix.homeworks.lesson3.services;
 
-import com.alevel.java.nix.homeworks.january29.MinMaxHandler;
+import com.alevel.java.nix.homeworks.lesson3.MinMaxHandler;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package com.alevel.java.nix.homeworks.january29.implementation;
+package com.alevel.java.nix.homeworks.lesson3.implementation;
 
-import com.alevel.java.nix.homeworks.january29.SortHandler;
+import com.alevel.java.nix.homeworks.lesson3.SortHandler;
 
 public class BubbleSort implements SortHandler {
 

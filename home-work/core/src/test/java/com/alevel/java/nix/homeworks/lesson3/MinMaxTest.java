@@ -1,7 +1,7 @@
-package com.alevel.java.nix.homeworks.january29;
+package com.alevel.java.nix.homeworks.lesson3;
 
-import com.alevel.java.nix.homeworks.january29.implementation.MinMax;
-import com.alevel.java.nix.homeworks.january29.services.MinMaxService;
+import com.alevel.java.nix.homeworks.lesson3.implementation.MinMax;
+import com.alevel.java.nix.homeworks.lesson3.services.MinMaxService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
