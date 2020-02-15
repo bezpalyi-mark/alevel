@@ -56,4 +56,41 @@ public class Level1Tests {
             assertEquals(expectedSecondResults[i], actual);
         }
     }
+
+    @Test
+    public void assertTriangleArea() {
+        int[][] pointsA = {
+                {0, 0},
+                {1, 1},
+                {1, 2},
+                {1, 2, 3},
+                {0, 0},
+                {-1, -1}
+        };
+        int[][] pointsB = {
+                {7, 5},
+                {2, 3},
+                {4, 1},
+                {1, 0},
+                {20, 20},
+                {20, 20}
+        };
+        int[][] pointsC = {
+                {3, 2},
+                {3, 1},
+                {5, 4},
+                {2, 4},
+                {3, 2},
+                {3, 2}
+        };
+        double[] expected = {0.5, 2, 5, 0, 10, 10.5};
+        Level1 level1 = new Level1();
+        double lambda = 0.000001;
+        for (int i = 0; i < expected.length; i++) {
+            double actual = level1.triangleArea(pointsA[i], pointsB[i], pointsC[i]);
+            assertTrue(
+                    Math.abs(expected[i] - actual) < lambda
+            );
+        }
+    }
 }

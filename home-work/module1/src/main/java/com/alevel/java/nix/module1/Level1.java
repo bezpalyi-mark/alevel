@@ -1,5 +1,6 @@
 package com.alevel.java.nix.module1;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,5 +34,42 @@ public class Level1 {
             }
         }
         return false;
+    }
+
+    public double triangleArea(final int[] pointA, final int[] pointB, final int[] pointC) {
+        if (pointA.length != 2 || pointB.length != 2 || pointC.length != 2) {
+            return 0;
+        }
+        if (hasEqualsPoints(pointA, pointB, pointC)) {
+            return 0;
+        }
+
+        double lengthA = Math.sqrt(
+                Math.pow(pointB[0] - pointA[0], 2) + Math.pow(pointB[1] - pointA[1], 2)
+        );
+        double lengthB = Math.sqrt(
+                Math.pow(pointC[0] - pointB[0], 2) + Math.pow(pointC[1] - pointB[1], 2)
+        );
+        double lengthC = Math.sqrt(
+                Math.pow(pointA[0] - pointC[0], 2) + Math.pow(pointA[1] - pointC[1], 2)
+        );
+
+        if (!isAcceptedLengths(lengthA, lengthB, lengthC)) {
+            return 0;
+        }
+
+        double halfArea = (lengthA + lengthB + lengthC) / 2;
+        double area = Math.sqrt(
+                halfArea * (halfArea - lengthA) * (halfArea - lengthB) * (halfArea - lengthC)
+        );
+        return area;
+    }
+
+    private boolean hasEqualsPoints(final int[] pointA, final int[] pointB, final int[] pointC) {
+        return Arrays.equals(pointA, pointB) || Arrays.equals(pointB, pointC) || Arrays.equals(pointA, pointC);
+    }
+
+    private boolean isAcceptedLengths(final double lengthA, final double lengthB, final double lengthC) {
+        return !((lengthA + lengthB) < lengthC) && !((lengthB + lengthC) < lengthA) && !((lengthC + lengthA) < lengthB);
     }
 }
