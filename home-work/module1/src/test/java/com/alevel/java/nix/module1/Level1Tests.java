@@ -2,7 +2,7 @@ package com.alevel.java.nix.module1;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class Level1Tests {
     @Test
@@ -20,6 +20,40 @@ public class Level1Tests {
         for (int i = 0; i < inputs.length; i++) {
             int actual = level1.getUniqueNumbersCount(inputs[i]);
             assertEquals(expected[i], actual);
+        }
+    }
+
+    @Test
+    public void assertIsValidHorsebackRiding() {
+        int[][] inputsHorsePositions = {
+                {4, 4},
+                {-5, -3},
+        };
+        int[][] inputsFirstMovePositions = {
+                {4, 4},
+                {2, 4},
+                {0, 0},
+                {3, 6},
+                {6, 3}
+        };
+        int[][] inputsSecondMovePositions = {
+                {-4, -5}, //true
+                {-5, -5}, //false
+                {-7, -3}, //false
+                {-3, -2}, //true
+                {}, //false
+                {1, 2, 3} //false
+        };
+        boolean[] expectedFirstResults = {false, false, false, true, true};
+        boolean[] expectedSecondResults = {true, false, false, true, false, false};
+        Level1 level1 = new Level1();
+        for (int i = 0; i < expectedFirstResults.length; i++) {
+            boolean actual = level1.isValidHorsebackRiding(inputsHorsePositions[0], inputsFirstMovePositions[i]);
+            assertEquals(expectedFirstResults[i], actual);
+        }
+        for (int i = 0; i < expectedSecondResults.length; i++) {
+            boolean actual = level1.isValidHorsebackRiding(inputsHorsePositions[1], inputsSecondMovePositions[i]);
+            assertEquals(expectedSecondResults[i], actual);
         }
     }
 }
