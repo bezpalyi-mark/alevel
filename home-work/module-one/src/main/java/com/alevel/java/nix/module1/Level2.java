@@ -42,32 +42,6 @@ public class Level2 {
         return 0;
     }
 
-    public int getLengthOfBinaryTreeDescending(final TreeNode root) {
-        int result = 0;
-        Stack<TreeNode> stack = new Stack<>();
-        if (root == null) {
-            return result;
-        }
-        stack.push(root);
-        TreeNode currentNode;
-        int counter = 0;
-        while (!stack.empty()) {
-            currentNode = stack.pop();
-            counter--;
-            while (currentNode != null) {
-                if (currentNode.right != null) {
-                    stack.push(currentNode.right);
-                }
-                currentNode = currentNode.left;
-                counter++;
-            }
-            if (counter > result) {
-                result = counter;
-            }
-        }
-        return result;
-    }
-
     public int getLengthOfBinaryTreeMixing(final TreeNode root) {
         int result = 0;
         Stack<TreeNode> stack = new Stack<>();
