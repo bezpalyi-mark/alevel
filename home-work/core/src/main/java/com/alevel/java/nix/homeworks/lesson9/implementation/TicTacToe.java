@@ -18,6 +18,7 @@ public class TicTacToe implements AbstractTicTacToe {
 
     public boolean nextMove(int playerNumber, int row, int column) {
         if (!isValidPosition(row, column) || (playerNumber != 1 && playerNumber != 2)) {
+            log.info("Invalid data!");
             return false;
         }
         log.info("Player" + playerNumber + " making his move");
