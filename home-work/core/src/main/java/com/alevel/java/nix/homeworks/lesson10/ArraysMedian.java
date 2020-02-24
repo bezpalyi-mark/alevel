@@ -29,8 +29,10 @@ public class ArraysMedian {
                 if (nums1[i - 1] <= nums2[j] && nums2[j - 1] <= nums1[i]) {
                     if (lengthSum % 2 != 0) {
                         median = Math.max(nums1[i - 1], nums2[j - 1]);
-                    } else {
+                    } else if (nums1.length <= 2 && nums2.length <= 2) {
                         median = Math.min(nums1[i - 1] + nums2[j], nums1[i - 1] + nums1[i]) / 2.0;
+                    } else {
+                        median = Math.min(nums1[i - 1] + nums2[j], nums1[i - 1] + nums2[j]) / 2.0;
                     }
                     isEnd = true;
                 }
