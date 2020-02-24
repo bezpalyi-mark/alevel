@@ -36,6 +36,8 @@ public class ArraysMedian {
                 if (lengthSum % 2 == 0) {
                     if (nums1.length > nums2.length) {
                         median = (nums1[i - 1] + nums1[i]) / 2.0;
+                    } else if (nums1.length == nums2.length) {
+                        median = (nums1[i - 1] + nums2[j]) / 2.0;
                     } else {
                         median = (nums2[j - 1] + nums2[j]) / 2.0;
                     }
@@ -54,7 +56,7 @@ public class ArraysMedian {
     }
 
     private double findMedianWithOneEmptyArray(int[] notEmptyArray) {
-        if(notEmptyArray.length == 1) return notEmptyArray[0];
+        if (notEmptyArray.length == 1) return notEmptyArray[0];
         if (notEmptyArray.length % 2 != 0) {
             return notEmptyArray[notEmptyArray.length / 2];
         }
