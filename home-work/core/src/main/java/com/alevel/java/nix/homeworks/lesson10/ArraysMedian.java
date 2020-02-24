@@ -22,10 +22,11 @@ public class ArraysMedian {
                 return Math.min(nums2[j - 1], nums1[0]);
             }
         }
+        median = nums1[i];
         while (!isEnd && counter < maxIndex) {
             j = ((nums1.length + nums2.length + 1) / 2) - i;
             try {
-                if (nums1[i - 1] < nums2[j] && nums2[j - 1] < nums1[i]) {
+                if (nums1[i - 1] <= nums2[j] && nums2[j - 1] <= nums1[i]) {
                     if (lengthSum % 2 != 0) {
                         median = Math.max(nums1[i - 1], nums2[j - 1]);
                     } else {

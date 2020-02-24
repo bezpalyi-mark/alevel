@@ -1,6 +1,7 @@
 package com.alevel.java.nix.homeworks.lesson10;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ArraysMedianTests {
@@ -74,7 +75,16 @@ public class ArraysMedianTests {
                 {1, 2},
                 {-1, 3}
         };
-        double[] expected = {13.0, 11.0, 3.0, 2.5, 3.0, 2.0, 2.0, 3.0, 2.0, 2.0, 2.0, 2.5, 1, 5, 2.5, 0.0, 1.5};
+        int[][] input18 = {
+                {1, 1},
+                {1, 1}
+        };
+        int[][] input19 = {
+                {1, 2},
+                {1, 1}
+        };
+        double[] expected = {13.0, 11.0, 3.0, 2.5, 3.0, 2.0, 2.0, 3.0, 2.0, 2.0, 2.0, 2.5, 1, 5, 2.5, 0.0, 1.5, 1.0,
+                1.0};
         double actual;
         ArraysMedian arraysMedian = new ArraysMedian();
 
@@ -128,5 +138,11 @@ public class ArraysMedianTests {
 
         actual = arraysMedian.findMedianSortedArrays(input17[0], input17[1]);
         assertEquals(expected[16], actual);
+
+        actual = arraysMedian.findMedianSortedArrays(input18[0], input18[1]);
+        assertEquals(expected[17], actual);
+
+        actual = arraysMedian.findMedianSortedArrays(input19[0], input19[1]);
+        assertEquals(expected[18], actual);
     }
 }
