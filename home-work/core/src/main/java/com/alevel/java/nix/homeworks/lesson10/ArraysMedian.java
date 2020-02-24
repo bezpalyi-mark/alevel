@@ -13,6 +13,7 @@ public class ArraysMedian {
         int lengthSum = nums1.length + nums2.length;
         int i = (minIndex + maxIndex) / 2;
         int j = ((lengthSum + 1) / 2) - i;
+        int counter = 0;
         boolean isEnd = false;
         if (i == 0) {
             if (nums2.length == 1) {
@@ -21,7 +22,7 @@ public class ArraysMedian {
                 return Math.min(nums2[j - 1], nums1[0]);
             }
         }
-        while (!isEnd) {
+        while (!isEnd && counter < maxIndex) {
             j = ((nums1.length + nums2.length + 1) / 2) - i;
             try {
                 if (nums1[i - 1] < nums2[j] && nums2[j - 1] < nums1[i]) {
@@ -51,6 +52,7 @@ public class ArraysMedian {
                 isEnd = true;
             }
             i = i + 1;
+            counter++;
         }
         return median;
     }
