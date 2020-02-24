@@ -9,7 +9,7 @@ public class ArraysMedian {
             return findMedianWithOneEmptyArray(nums1);
         }
 
-        if(nums1.length == 1 && nums2.length == 1) {
+        if (nums1.length == 1 && nums2.length == 1) {
             return (nums1[0] + nums2[0]) / 2.0;
         }
 
@@ -24,6 +24,8 @@ public class ArraysMedian {
         if (i == 0) {
             if (nums2.length == 1) {
                 return Math.min(nums1[j - 1], nums2[0]);
+            } else if (nums2.length == 2) {
+                return nums2[0];
             } else {
                 return Math.min(nums2[j - 1], nums1[0]);
             }
