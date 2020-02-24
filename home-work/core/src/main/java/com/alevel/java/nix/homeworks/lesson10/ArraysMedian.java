@@ -27,7 +27,11 @@ public class ArraysMedian {
             } else if (nums2.length == 1) {
                 return Math.min(nums1[j - 1], nums2[0]);
             } else if (nums2.length == 2) {
-                return nums2[0];
+                if(nums2[1] > 0) {
+                    return Math.min(nums2[0], nums2[1]);
+                } else {
+                    return Math.max(nums2[0], nums2[1]);
+                }
             } else {
                 return Math.min(nums2[j - 1], nums1[0]);
             }
