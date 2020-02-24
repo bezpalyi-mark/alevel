@@ -22,7 +22,9 @@ public class ArraysMedian {
         int counter = 0;
         boolean isEnd = false;
         if (i == 0) {
-            if (nums2.length == 1) {
+            if (nums1.length == 2 && nums2.length == 1) {
+                return Math.min(nums1[0], nums1[1]);
+            } else if (nums2.length == 1) {
                 return Math.min(nums1[j - 1], nums2[0]);
             } else if (nums2.length == 2) {
                 return nums2[0];
