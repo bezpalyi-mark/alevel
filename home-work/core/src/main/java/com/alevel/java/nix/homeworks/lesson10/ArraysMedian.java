@@ -2,11 +2,17 @@ package com.alevel.java.nix.homeworks.lesson10;
 
 public class ArraysMedian {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+
         if (nums1.length == 0) {
             return findMedianWithOneEmptyArray(nums2);
         } else if (nums2.length == 0) {
             return findMedianWithOneEmptyArray(nums1);
         }
+
+        if(nums1.length == 1 && nums2.length == 1) {
+            return (nums1[0] + nums2[0]) / 2.0;
+        }
+
         double median = 0;
         int minIndex = 0;
         int maxIndex = Math.min(nums1.length, nums2.length);
