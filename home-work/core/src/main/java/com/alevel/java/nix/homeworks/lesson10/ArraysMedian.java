@@ -5,7 +5,7 @@ public class ArraysMedian {
         if (nums1.length == 0) {
             return findMedianWithOneEmptyArray(nums2);
         } else if (nums2.length == 0) {
-            return findMedianWithOneEmptyArray(nums2);
+            return findMedianWithOneEmptyArray(nums1);
         }
         double median = 0;
         int minIndex = 0;
