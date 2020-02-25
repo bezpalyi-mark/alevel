@@ -36,8 +36,18 @@ public class ArraysMedian {
                 } else {
                    return Math.min(nums1[0], nums2[1]);
                 }
-            } else {
-                return Math.min(nums2[j - 1], nums1[0]);
+            } else if(nums1.length == 3) {
+                if(nums2[0] > nums1[0] && nums2[0] < nums1[2]) {
+                    return (nums2[0] + nums1[1]) / 2.0;
+                } else {
+                    return (nums1[0] + nums1[1]) / 2.0;
+                }
+            } else if(nums2.length == 3) {
+                if(nums1[0] > nums2[0] && nums1[0] < nums2[2]) {
+                    return (nums1[0] + nums2[1]) / 2.0;
+                } else {
+                    return (nums2[0] + nums2[1]) / 2.0;
+                }
             }
         }
         median = nums1[i];
