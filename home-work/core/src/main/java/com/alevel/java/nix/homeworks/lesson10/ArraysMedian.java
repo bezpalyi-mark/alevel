@@ -22,7 +22,19 @@ public class ArraysMedian {
         int counter = 0;
         boolean isEnd = false;
         if (i == 0) {
-            if (nums1.length == 2 && nums2.length == 1) {
+            if(nums1.length == 3) {
+                if(nums2[0] > nums1[0] && nums2[0] < nums1[2]) {
+                    return (nums2[0] + nums1[1]) / 2.0;
+                } else {
+                    return (nums1[0] + nums1[1]) / 2.0;
+                }
+            } else if(nums2.length == 3) {
+                if(nums1[0] > nums2[0] && nums1[0] < nums2[2]) {
+                    return (nums1[0] + nums2[1]) / 2.0;
+                } else {
+                    return (nums2[0] + nums2[1]) / 2.0;
+                }
+            } else if (nums1.length == 2 && nums2.length == 1) {
                 if(nums1[0] > nums2[0]) {
                     return nums1[0];
                 } else {
@@ -35,18 +47,6 @@ public class ArraysMedian {
                     return nums2[0];
                 } else {
                    return Math.min(nums1[0], nums2[1]);
-                }
-            } else if(nums1.length == 3) {
-                if(nums2[0] > nums1[0] && nums2[0] < nums1[2]) {
-                    return (nums2[0] + nums1[1]) / 2.0;
-                } else {
-                    return (nums1[0] + nums1[1]) / 2.0;
-                }
-            } else if(nums2.length == 3) {
-                if(nums1[0] > nums2[0] && nums1[0] < nums2[2]) {
-                    return (nums1[0] + nums2[1]) / 2.0;
-                } else {
-                    return (nums2[0] + nums2[1]) / 2.0;
                 }
             }
         }
