@@ -130,9 +130,11 @@ public class ArraysMedian {
                     }
                 } else {
                     if (nums1.length > nums2.length) {
-                        median = Math.min(nums1[j - 1], nums2[i]);
+                        median = Math.min(nums2[j - 1], nums1[i]);
+                        median = Math.max(nums1[i - 1], median);
                     } else {
-                        median = Math.min(nums2[j - 1], nums2[j]);
+                        median = Math.min(nums1[i - 1], nums2[j]);
+                        median = Math.max(nums2[j - 1], median);
                     }
                 }
                 isEnd = true;
