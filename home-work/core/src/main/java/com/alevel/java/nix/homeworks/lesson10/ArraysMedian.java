@@ -57,6 +57,9 @@ public class ArraysMedian {
         median = nums1[i];
         while (!isEnd && counter < maxIndex) {
             j = ((nums1.length + nums2.length + 1) / 2) - i;
+            if(j == 0) {
+                return (nums1[0] + nums2[nums2.length - 1]) / 2.0;
+            }
             try {
                 if (nums1[i - 1] <= nums2[j] && nums2[j - 1] <= nums1[i]) {
                     if (lengthSum % 2 != 0) {
@@ -65,7 +68,7 @@ public class ArraysMedian {
                         if (nums2[j - 1] < nums1[i - 1]) {
                             median = Math.min(nums1[i - 1] + nums2[j], nums1[i - 1] + nums1[i]) / 2.0;
                         } else {
-                            median = Math.min(nums1[i - 1] + nums2[j], nums1[i] + nums2[j - 1]) / 2.0;
+                            median = Math.min(nums1[i] + nums2[j - 1], nums2[j] + nums2[j - 1]) / 2.0;
                         }
                     } else {
                         median = Math.max(nums1[i - 1] + nums2[j], nums1[i] + nums2[j - 1]) / 2.0;
