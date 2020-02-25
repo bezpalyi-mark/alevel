@@ -131,8 +131,12 @@ public class ArraysMedianTests {
                 {4},
                 {1, 2, 3}
         };
+        int[][] input32 = {
+                {1, 3},
+                {2, 4}
+        };
         double[] expected = {13.0, 11.0, 3.0, 2.5, 3.0, 2.0, 2.0, 3.0, 2.0, 2.0, 2.0, 2.5, 1, 5, 2.5, 0.0, 1.5, 1.0,
-                1.0, 2.0, 2.0, 100_000.5, 2.0, -1.0, 2.0, 2.0, 2.0, 2.0, 2.5, 2.5, 2.5};
+                1.0, 2.0, 2.0, 100_000.5, 2.0, -1.0, 2.0, 2.0, 2.0, 2.0, 2.5, 2.5, 2.5, 2.5};
         double actual;
         ArraysMedian arraysMedian = new ArraysMedian();
 
@@ -228,5 +232,8 @@ public class ArraysMedianTests {
 
         actual = arraysMedian.findMedianSortedArrays(input31[0], input31[1]);
         assertEquals(expected[30], actual);
+
+        actual = arraysMedian.findMedianSortedArrays(input32[0], input32[1]);
+        assertEquals(expected[31], actual);
     }
 }
