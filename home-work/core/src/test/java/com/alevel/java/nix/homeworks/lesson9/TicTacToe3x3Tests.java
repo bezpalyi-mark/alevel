@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TicTacToe3x3Tests {
     @Test
-    public void isEndTest() {
+    public void haveWinner() {
         char[][] playingArea1 = {
                 {'x', '0', 'x'},
                 {'0', 'x', ' '},
@@ -33,22 +33,36 @@ public class TicTacToe3x3Tests {
                 {'x', 'x', 'x'},
                 {'0', ' ', 'x'}
         };
+        char[][] playingArea6 = {
+                {'x', '0', 'x'},
+                {'x', '0', '0'},
+                {'0', 'x', 'x'}
+        };
         TicTacToe3x3 game = new TicTacToe3x3();
 
         game.setPlayingArea(playingArea1);
         assertTrue(game.haveWinner());
+        assertTrue(game.isEnd());
 
         game.setPlayingArea(playingArea2);
         assertFalse(game.haveWinner());
+        assertFalse(game.isEnd());
 
         game.setPlayingArea(playingArea3);
         assertFalse(game.haveWinner());
+        assertFalse(game.isEnd());
 
         game.setPlayingArea(playingArea4);
         assertTrue(game.haveWinner());
+        assertTrue(game.isEnd());
 
         game.setPlayingArea(playingArea5);
         assertTrue(game.haveWinner());
+        assertTrue(game.isEnd());
+
+        game.setPlayingArea(playingArea6);
+        assertFalse(game.haveWinner());
+        assertTrue(game.isEnd());
     }
 
     @Test

@@ -20,8 +20,6 @@ public class TicTacToe3x3 implements TicTacToe {
 
     private int currentPlayer = 1;
 
-    private boolean isEnd = false;
-
     private int occupiedPositionsCount = 0;
 
     public TicTacToe3x3() {
@@ -38,15 +36,15 @@ public class TicTacToe3x3 implements TicTacToe {
         playingArea[row - 1][column - 1] = currentPlayer == 1 ? 'x' : '0';
         currentPlayer = ++currentPlayer % 2;
         occupiedPositionsCount++;
-        checkForEnd();
         return true;
     }
 
-    private void checkForEnd() {
+    private boolean checkForEnd() {
         if (occupiedPositionsCount == MAX_MOVES_VALUE || haveWinner()) {
-            isEnd = true;
             endGame();
+            return true;
         }
+        return false;
     }
 
     public boolean isValidPosition(int row, int column) {
@@ -98,7 +96,6 @@ public class TicTacToe3x3 implements TicTacToe {
             WINNER_CHAR = playingArea[0][2];
             return true;
         }
-
         return false;
     }
 
@@ -135,8 +132,20 @@ public class TicTacToe3x3 implements TicTacToe {
         return playingArea;
     }
 
+    private void recountOccupiedPositions() {
+        occupiedPositionsCount = 0;
+        for (char[] chars : playingArea) {
+            for (int j = 0; j < playingArea[0].length; j++) {
+                if (chars[j] != ' ') {
+                    occupiedPositionsCount++;
+                }
+            }
+        }
+    }
+
     public void setPlayingArea(char[][] playingArea) {
         this.playingArea = playingArea;
+        recountOccupiedPositions();
     }
 
     public GameView view() {
@@ -161,6 +170,6 @@ public class TicTacToe3x3 implements TicTacToe {
     }
 
     public boolean isEnd() {
-        return isEnd;
+        return checkForEnd();
     }
 }
