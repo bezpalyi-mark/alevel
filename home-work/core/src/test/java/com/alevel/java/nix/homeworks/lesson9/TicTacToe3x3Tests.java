@@ -83,7 +83,7 @@ public class TicTacToe3x3Tests {
         assertTrue(game.nextMove(2, 3));
         assertFalse(game.nextMove(2, 3));
         assertFalse(game.nextMove( 1, 1));
-        assertFalse(game.nextMove( 3, 2));
         assertTrue(game.nextMove( 3, 2));
+        assertFalse(game.nextMove( 3, 2));
     }
 }
