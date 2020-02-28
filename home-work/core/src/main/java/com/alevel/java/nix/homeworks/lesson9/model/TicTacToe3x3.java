@@ -1,29 +1,52 @@
-package com.alevel.java.nix.homeworks.lesson9.implementation;
+package com.alevel.java.nix.homeworks.lesson9.model;
 
-import com.alevel.java.nix.homeworks.lesson9.AbstractTicTacToe;
+import com.alevel.java.nix.homeworks.lesson9.view.GameView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TicTacToe implements AbstractTicTacToe {
+import java.text.MessageFormat;
 
-    private static final Logger log = LoggerFactory.getLogger(TicTacToe.class);
+public class TicTacToe3x3 implements TicTacToe {
+
+    private static final Logger log = LoggerFactory.getLogger(TicTacToe3x3.class);
 
     private char[][] playingArea = new char[3][3];
-    public static final int MAX_MOVES_VALUE = 9;
-    private char WINNER_CHAR;
 
-    public TicTacToe() {
+    public static final int MAX_MOVES_VALUE = 9;
+
+    private char WINNER_CHAR = 'D';
+
+    private GameView view;
+
+    private int currentPlayer = 1;
+
+    private boolean isEnd = false;
+
+    private int occupiedPositionsCount = 0;
+
+    public TicTacToe3x3() {
         initPlayingArea();
+        view = new GameView();
     }
 
-    public boolean nextMove(int playerNumber, int row, int column) {
-        if (!isValidPosition(row, column) || (playerNumber != 1 && playerNumber != 2)) {
-            log.info("Invalid data!");
+    public boolean nextMove(int row, int column) {
+        if (!isValidPosition(row, column)) {
+            log.warn("Invalid data!");
             return false;
         }
-        log.info("Player" + playerNumber + " making his move");
-        playingArea[row - 1][column - 1] = playerNumber == 1 ? 'x' : '0';
+        log.info("Player" + currentPlayer + " making his move");
+        playingArea[row - 1][column - 1] = currentPlayer == 1 ? 'x' : '0';
+        currentPlayer = ++currentPlayer % 2;
+        occupiedPositionsCount++;
+        checkForEnd();
         return true;
+    }
+
+    private void checkForEnd() {
+        if (occupiedPositionsCount == MAX_MOVES_VALUE || haveWinner()) {
+            isEnd = true;
+            endGame();
+        }
     }
 
     public boolean isValidPosition(int row, int column) {
@@ -34,7 +57,7 @@ public class TicTacToe implements AbstractTicTacToe {
         return playingArea[row - 1][column - 1] == ' ';
     }
 
-    public boolean isEnd() {
+    public boolean haveWinner() {
         //check by rows
         if (playingArea[0][0] == playingArea[0][1] && playingArea[0][0] == playingArea[0][2]
                 && playingArea[0][0] != ' ') { //first row
@@ -80,14 +103,22 @@ public class TicTacToe implements AbstractTicTacToe {
     }
 
     public void endGame() {
+        GameEvents events;
         switch (WINNER_CHAR) {
             case 'x':
-                System.out.println("\nCongratulations! First player win!");
+                events = GameEvents.FIRST_PLAYER_WON;
+                view.print(events.getWinner());
                 log.info("Player1 won");
                 break;
             case '0':
-                System.out.println("\nCongratulations! Second player win!");
+                events = GameEvents.SECOND_PLAYER_WON;
+                view.print(events.getWinner());
                 log.info("Player2 won");
+                break;
+            case 'D':
+                events = GameEvents.DRAW;
+                view.print(events.getWinner());
+                log.info("Draw");
                 break;
         }
     }
@@ -106,5 +137,30 @@ public class TicTacToe implements AbstractTicTacToe {
 
     public void setPlayingArea(char[][] playingArea) {
         this.playingArea = playingArea;
+    }
+
+    public GameView view() {
+        return view;
+    }
+
+    public void printPlayingArea() {
+        view.print(MessageFormat.format(
+                "    1   2   3\n" +
+                        "1   {0} | {1} | {2} \n" +
+                        "   -----------\n" +
+                        "2   {3} | {4} | {5} \n" +
+                        "   -----------\n" +
+                        "3   {6} | {7} | {8} \n",
+                playingArea[0][0], playingArea[0][1], playingArea[0][2],
+                playingArea[1][0], playingArea[1][1], playingArea[1][2],
+                playingArea[2][0], playingArea[2][1], playingArea[2][2]));
+    }
+
+    public int getMaxMovesValue() {
+        return MAX_MOVES_VALUE;
+    }
+
+    public boolean isEnd() {
+        return isEnd;
     }
 }
