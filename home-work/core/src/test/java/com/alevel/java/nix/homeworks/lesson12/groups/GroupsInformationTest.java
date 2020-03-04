@@ -3,10 +3,19 @@ package com.alevel.java.nix.homeworks.lesson12.groups;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class GroupsInformationTest {
 
     @Test
     void assertShowContractStudents() {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream out = new PrintStream(baos);
+        System.setOut(out);
+
         Student[] students = new Student[7];
 
         for (int i = 0; i < students.length; i++) {
@@ -47,5 +56,11 @@ class GroupsInformationTest {
 
         GroupsInformation groupsInformation = new GroupsInformation(groups);
         groupsInformation.showContractStudents(0);
+
+        String expected = "Name: Martin, contract cost: 2,500\n" +
+                "Name: Ben, contract cost: 7,500\n";
+        String actual = baos.toString();
+
+        assertEquals(expected, actual);
     }
 }
