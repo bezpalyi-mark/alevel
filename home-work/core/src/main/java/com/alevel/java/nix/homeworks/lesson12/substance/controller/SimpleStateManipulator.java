@@ -17,6 +17,9 @@ public class SimpleStateManipulator {
 
     public void begin() {
         Substance substance = choice.getSubstance();
+        if(substance == null) {
+            return;
+        }
         System.out.println(
                 MessageFormat.format(
                         "Ok. Now {0} temperature is 20(C) and it have {1} state.",
