@@ -1,31 +1,17 @@
-package com.alevel.java.nix.homeworks.lesson12;
+package com.alevel.java.nix.homeworks.lesson12.groups;
 
-public class GroupsInformation {
-    private Group[] groups;
 
-    public GroupsInformation(Group[] groups) {
-        this.groups = groups;
-    }
+import org.junit.jupiter.api.Test;
 
-    public void showContractStudents(final int groupNumber) {
-        if(groupNumber >= groups.length || groupNumber < 0) {
-            System.out.println("No such group!");
-            return;
-        }
-        for(Student student : groups[groupNumber]) {
-            if(student instanceof ContractStudent) {
-                System.out.println(student.toString());
-            }
-        }
-    }
+class GroupsInformationTest {
 
-    public static void main(String[] args) {
+    @Test
+    void assertShowContractStudents() {
         Student[] students = new Student[7];
 
-        for(int i = 0; i < students.length; i++) {
+        for (int i = 0; i < students.length; i++) {
             students[i] = new Student();
         }
-
         students[0].name = "Alex";
         students[0].age = 18;
 
@@ -43,7 +29,7 @@ public class GroupsInformation {
 
         ContractStudent[] contractStudents = new ContractStudent[2];
 
-        for(int i = 0; i < contractStudents.length; i++) {
+        for (int i = 0; i < contractStudents.length; i++) {
             contractStudents[i] = new ContractStudent();
         }
 
@@ -61,6 +47,5 @@ public class GroupsInformation {
 
         GroupsInformation groupsInformation = new GroupsInformation(groups);
         groupsInformation.showContractStudents(0);
-
     }
 }

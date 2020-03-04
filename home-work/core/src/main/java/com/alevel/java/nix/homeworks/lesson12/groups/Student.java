@@ -1,4 +1,4 @@
-package com.alevel.java.nix.homeworks.lesson12;
+package com.alevel.java.nix.homeworks.lesson12.groups;
 
 import java.text.MessageFormat;
 
