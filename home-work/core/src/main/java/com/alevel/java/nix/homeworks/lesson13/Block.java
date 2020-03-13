@@ -1,6 +1,6 @@
 package com.alevel.java.nix.homeworks.lesson13;
 
 @FunctionalInterface
-public interface Block {
-    void run() throws Exception;
+public interface Block<A> {
+    A run() throws Exception;
 }

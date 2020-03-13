@@ -1,6 +1,6 @@
 package com.alevel.java.nix.homeworks.lesson13;
 
-public class Retry {
+public class Retry<A> {
 
     private final int SLEEP_MULTIPLEX;
 
@@ -8,18 +8,18 @@ public class Retry {
         SLEEP_MULTIPLEX = Math.max(sleepMultiplex, 100);
     }
 
-    public void repeat(Block block, int n) throws Exception {
+    public A repeat(Block<A> block, int n) throws Exception {
+        Exception exception = new Exception();
         for (int i = 0; i < n; i++) {
             try {
-                block.run();
+                A temp = block.run();
                 Thread.sleep(SLEEP_MULTIPLEX * i);
-                return;
+                return temp;
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-                if (i == (n - 1)) {
-                    throw new Exception();
-                }
+                exception = e;
             }
         }
+        throw exception;
     }
 }

@@ -27,34 +27,36 @@ class RetryTest {
         FILE_NAME = FILE_NAME.replace(currentName, COUNT + ".txt");
     }
 
-    public static void ensureException() {
+    public static Integer ensureException() {
         int a = 1 / 0;
+        return a;
     }
 
-    public static void mayBeException() throws FileNotFoundException {
+    public static Integer mayBeException() throws FileNotFoundException {
         File file = new File(FILE_NAME);
         increaseFileNumber();
         FileReader fr = new FileReader(file);
+        return fr.hashCode();
     }
 
     @Test
     public void repeatTest() throws Exception {
         assertThrows(Exception.class,
-                () -> new Retry(100).repeat(RetryTest::ensureException, 5)
+                () -> new Retry<Integer>(100).repeat(RetryTest::ensureException, 5)
         );
 
         File file = new File("./src/test/java/com/alevel/java/nix/homeworks/lesson13/3.txt");
         file.createNewFile();
 
         //Будем пытаться открыть файл сначала 1.txt. потом 2.txt, существует только 3.txt
-        assertDoesNotThrow(() -> new Retry(100).repeat(RetryTest::mayBeException, 5));
+        assertDoesNotThrow(() -> new Retry<Integer>(100).repeat(RetryTest::mayBeException, 5));
 
         //Обнуляем имя файла в программе до 1.txt
         restFileNumber();
 
         //Доходим только до 2.txt
         assertThrows(Exception.class,
-                () -> new Retry(100).repeat(RetryTest::mayBeException, 2)
+                () -> new Retry<Integer>(100).repeat(RetryTest::mayBeException, 2)
         );
     }
 }
