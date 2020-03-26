@@ -8,6 +8,6 @@ class ReadFileFilteredTest {
 
     @Test
     void substringFilter() {
-        
+
     }
 }
