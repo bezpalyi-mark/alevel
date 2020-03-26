@@ -81,19 +81,4 @@ public class FilesHandler {
         file = file.reverse();
         return Arrays.asList(extension.toString(), file.toString());
     }
-
-    public static void main(String[] args) {
-        File nioTestDir = new File("./nioTestDir");
-        File nioTestDestDir = new File("./nioTestDestDir");
-        nioTestDir.mkdir();
-        if(!nioTestDir.exists()) {
-            System.err.println("Cannot remove nioTestDir");
-        }
-        if(!nioTestDir.delete()) {
-            System.err.println("Cannot remove nioTestDir");
-        }
-        if(!nioTestDestDir.delete()) {
-            System.err.println("Cannot remove nioTestDestDir");
-        }
-    }
 }
