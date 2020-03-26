@@ -70,6 +70,10 @@ public class HandlerCSV {
         return extractedData[row][column];
     }
 
+    public String[] getHeaders() {
+        return headers;
+    }
+
     public String get(int row, String headName) {
         if(row > extractedData.length || row < 0) {
             throw new IndexOutOfBoundsException(MessageFormat.format(
@@ -84,5 +88,5 @@ public class HandlerCSV {
         }
         return null;
     }
-    
+
 }
