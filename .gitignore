@@ -129,5 +129,7 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 .flattened-pom.xml
+nioTestDestDir/
+nioTestDir/
 
 # End of https://www.gitignore.io/api/java,maven,intellij
