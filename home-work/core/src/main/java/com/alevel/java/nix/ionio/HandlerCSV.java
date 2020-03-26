@@ -15,7 +15,7 @@ public class HandlerCSV {
     private String[][] extractedData;
     private Integer headersCount;
 
-    public HandlerCSV(List<String> data, String[] headers, String[][] extractedData, Integer headersCount) {
+    private HandlerCSV(List<String> data, String[] headers, String[][] extractedData, Integer headersCount) {
         this.data = data;
         this.headers = headers;
         this.extractedData = extractedData;
