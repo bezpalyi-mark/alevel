@@ -13,11 +13,7 @@ class HandlerCSVTest {
 
     @Test
     void getHandledCSV() {
-        File file = new File("./core/data/fileToReadCSV.csv");
-        File file1 = new File(".");
-        if(file.exists()) {
-            System.out.println("It's ok");
-        }
-        System.out.println(Arrays.toString(file.list()));
+        File file = new File("./src/test/resources/fileToReadCSV.csv");
+
     }
 }
