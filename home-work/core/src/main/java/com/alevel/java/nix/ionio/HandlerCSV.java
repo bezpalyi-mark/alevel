@@ -1,8 +1,10 @@
 package com.alevel.java.nix.ionio;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.util.List;
@@ -15,18 +17,18 @@ public class HandlerCSV {
     private String[][] extractedData;
     private Integer headersCount;
 
-    private HandlerCSV(List<String> data, String[] headers, String[][] extractedData, Integer headersCount) {
-        this.data = data;
-        this.headers = headers;
-        this.extractedData = extractedData;
-        this.headersCount = headersCount;
-    }
-
-    public HandlerCSV getHandledCSV(Path path) {
+    public HandlerCSV(Path path) throws NoSuchFileException {
+        assertPath(path);
         readCSV(path);
         extractHeaders();
         extractData();
-        return new HandlerCSV(data, headers, extractedData, headersCount);
+    }
+
+    private void assertPath(Path path) throws NoSuchFileException {
+        File file = new File(path.toString());
+        if (!file.exists() || !file.isFile()) {
+            throw new NoSuchFileException(path.toString());
+        }
     }
 
     private void readCSV(Path path) {
@@ -48,20 +50,18 @@ public class HandlerCSV {
     private void extractData() {
         extractedData = new String[data.size() - 1][headersCount];
         for (int i = 1, length = data.size(); i < length; i++) {
-            for (int j = 0; j < headersCount; j++) {
-                extractedData[i] = data.get(i).split(",");
-            }
+            extractedData[i - 1] = data.get(i).split(",");
         }
     }
 
     public String get(int row, int column) {
-        if(row > extractedData.length || row < 0) {
+        if (row > extractedData.length || row < 0) {
             throw new IndexOutOfBoundsException(MessageFormat.format(
                     "Row number is {0}, but rows in file {1}",
                     row, extractedData.length
             ));
         }
-        if(column > extractedData[0].length || column < 0) {
+        if (column > extractedData[0].length || column < 0) {
             throw new IndexOutOfBoundsException(MessageFormat.format(
                     "Column number is {0}, but columns in file {1}",
                     column, headersCount
@@ -75,18 +75,22 @@ public class HandlerCSV {
     }
 
     public String get(int row, String headName) {
-        if(row > extractedData.length || row < 0) {
+        if (row > extractedData.length || row < 0) {
             throw new IndexOutOfBoundsException(MessageFormat.format(
                     "Row number is {0}, but rows in file {1}",
                     row, extractedData.length
             ));
         }
-        for(int i = 0; i < headersCount; i++) {
-            if(headName.equals(headers[i])) {
-                return extractedData[row][i];
+        try {
+            for (int i = 0; i < headersCount; i++) {
+                if (headName.equals(headers[i])) {
+                    return extractedData[row][i];
+                }
             }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return "";
         }
-        return null;
+        return "";
     }
 
 }
