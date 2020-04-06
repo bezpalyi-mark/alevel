@@ -9,15 +9,16 @@ import java.util.Objects;
 
 public class DateReformat {
 
-    private final String[] patterns = {
-            "dd/MM/yyyy", "yyyy/MM/dd", "MM-dd-yyyy"
+    private final DateTimeFormatter[] formatters = {
+            DateTimeFormatter.ofPattern("dd/MM/yyyy"),
+            DateTimeFormatter.ofPattern("yyyy/MM/dd"),
+            DateTimeFormatter.ofPattern("MM-dd-yyyy")
     };
-
 
     public String reformatDate(String dateString) {
         Objects.requireNonNull(dateString);
-        for (String pattern : patterns) {
-            String result = tryToCovertWithFormatter(dateString, pattern);
+        for (DateTimeFormatter formatter : formatters) {
+            String result = tryToCovertWithFormatter(dateString, formatter);
             if (result != null) {
                 return result;
             }
@@ -25,13 +26,13 @@ public class DateReformat {
         return null;
     }
 
-    private String tryToCovertWithFormatter(String dateString, String pattern) {
+    private String tryToCovertWithFormatter(String dateString, DateTimeFormatter formatter) {
         LocalDate date;
         try {
-            date = LocalDate.parse(dateString, DateTimeFormatter.ofPattern(pattern));
+            date = LocalDate.parse(dateString, formatter);
             return date.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         } catch (DateTimeParseException e) {
-            System.out.println("Pattern " + pattern + " is not compatible with " + dateString);
+            System.out.println("Pattern " + formatter.toString() + " is not compatible with " + dateString);
         }
         return null;
     }
