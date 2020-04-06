@@ -15,6 +15,8 @@ public class DateReformat {
             DateTimeFormatter.ofPattern("MM-dd-yyyy")
     };
 
+    private final DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+
     public String reformatDate(String dateString) {
         Objects.requireNonNull(dateString);
         for (DateTimeFormatter formatter : formatters) {
@@ -30,7 +32,7 @@ public class DateReformat {
         LocalDate date;
         try {
             date = LocalDate.parse(dateString, formatter);
-            return date.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+            return date.format(outputFormatter);
         } catch (DateTimeParseException e) {
             System.out.println("Pattern " + formatter.toString() + " is not compatible with " + dateString);
         }
