@@ -13,8 +13,8 @@ class UniqueNameTest {
     void from() {
         UniqueName uniqueName = new UniqueName();
         assertEquals("Vika", uniqueName.from(Arrays.asList("Mark", "Dima", "Vika", "Dima", "Sasha", "Mark")));
-        assertEquals("", uniqueName.from(Arrays.asList("Mark", "Dima", "Mark", "Dima", "Dima", "Mark")));
+        assertNull(uniqueName.from(Arrays.asList("Mark", "Dima", "Mark", "Dima", "Dima", "Mark")));
         assertEquals("Sasha", uniqueName.from(Arrays.asList("Mark", "Dima", "Dima", "Sasha", "Mark")));
-        assertEquals("", uniqueName.from(Collections.emptyList()));
+        assertNull(uniqueName.from(Collections.emptyList()));
     }
 }
