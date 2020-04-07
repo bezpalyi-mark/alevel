@@ -5,5 +5,7 @@ import com.alevel.java.nix.hangman.model.PersonStates;
 public interface PrintState {
     void print(String string);
 
-    void printCurrentState(char[] chars, PersonStates state);
+    void printCurrentState();
+
+    void updateView(PersonStates state, char[] chars);
 }

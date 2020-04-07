@@ -1,7 +1,9 @@
 package com.alevel.java.nix.hangman.controller;
 
+import java.util.List;
+
 public interface Input {
     char getChar();
 
-    String[] readFileFromClasspath(String name);
+    List<String> readFileFromClasspath(String name);
 }

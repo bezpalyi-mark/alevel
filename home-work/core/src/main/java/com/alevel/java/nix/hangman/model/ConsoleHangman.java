@@ -8,40 +8,43 @@ import java.util.*;
 public class ConsoleHangman implements Hangman {
     private static final int MAX_MISSES = 6;
 
-    private PrintState view;
+    private final PrintState view;
 
-    private String[] words;
+    private final List<String> words;
 
-    private String word;
+    private final String word;
 
-    private char[] progressChars;
+    private final char[] progressChars;
 
-    private Set<Character> storedChars;
+    private final Set<Character> storedChars;
 
     private int missesCount = 0;
 
-    private PersonStates[] states;
+    private final PersonStates[] states;
 
     private int step = 0;
 
     private boolean end = false;
 
-    public ConsoleHangman(String[] words) {
-        view = new ConsoleView();
+    private boolean loose = false;
+
+    public ConsoleHangman(List<String> words) {
         this.words = words;
         word = chooseWord();
         progressChars = new char[word.length()];
+        fillProgressChars();
         storedChars = new HashSet<>();
         states = PersonStates.values();
+        view = new ConsoleView(progressChars);
     }
 
 
     @Override
     public boolean nextStep(char nextChar) {
+        boolean result = false;
         if(isEnd()) {
             return false;
         }
-        view.printCurrentState(progressChars, states[missesCount]);
         if(isValidChar(nextChar)) {
             storedChars.add(nextChar);
             for(int i = 0; i < word.length(); i++) {
@@ -50,11 +53,14 @@ public class ConsoleHangman implements Hangman {
                     step++;
                 }
             }
-        }  else {
+            result = true;
+        }  else if (!consistInProgress(nextChar)){
             missesCount++;
+            result = false;
         }
+        view.updateView(states[missesCount], progressChars);
         assertEnd();
-        return true;
+        return result;
     }
 
     private void assertEnd() {
@@ -62,8 +68,14 @@ public class ConsoleHangman implements Hangman {
             end = true;
         }
         if(missesCount == MAX_MISSES) {
+            loose = true;
             end = true;
         }
+    }
+
+    @Override
+    public boolean isLoose() {
+        return loose;
     }
 
     @Override
@@ -98,14 +110,14 @@ public class ConsoleHangman implements Hangman {
 
     @Override
     public String chooseWord() {
-        int length = words.length - 1;
-        int choose = (int) (Math.random() % length);
-        return words[choose];
+        int length = words.size() - 1;
+        int choose = (int) (Math.random() * length);
+        return words.get(choose);
     }
 
     @Override
     public void fillProgressChars() {
-        for (int i = 0; i < words.length; i++) {
+        for (int i = 0; i < word.length(); i++) {
             progressChars[i] = '_';
         }
     }

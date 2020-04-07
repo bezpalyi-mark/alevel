@@ -14,4 +14,6 @@ public interface Hangman {
     String chooseWord();
 
     void fillProgressChars();
+
+    boolean isLoose();
 }

@@ -63,6 +63,13 @@ public enum PersonStates {
             "|   / \\ \n"
     );
 
+    private String state;
+
     PersonStates(String s) {
+        state = s;
+    }
+
+    public String getState() {
+        return state;
     }
 }
