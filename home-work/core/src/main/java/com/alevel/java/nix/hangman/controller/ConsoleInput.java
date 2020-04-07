@@ -5,28 +5,30 @@ import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Collections;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ConsoleInput implements Input {
-    private final Scanner scanner;
+    private final InputStream inputStream;
 
     public ConsoleInput(InputStream inputStream) {
-        scanner = new Scanner(inputStream);
+        this.inputStream = inputStream;
     }
 
     @Override
     public char getChar() {
         try {
-            String input = scanner.next();
-            if(input.length() > 1 || !Character.isAlphabetic(input.charAt(0))) {
+            byte[] input = inputStream.readNBytes(2);
+            if (!Character.isAlphabetic(input[0])) {
                 return '-';
             }
-            return input.charAt(0);
-        } catch (InputMismatchException e) {
-            scanner.next();
-            return '-';
+            return (char) input[0];
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
         }
     }
 
