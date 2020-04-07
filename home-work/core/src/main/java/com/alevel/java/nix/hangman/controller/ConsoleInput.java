@@ -23,10 +23,11 @@ public class ConsoleInput implements Input {
     public char getChar() {
         try {
             byte[] input = inputStream.readNBytes(2);
-            if (!Character.isAlphabetic(input[0])) {
+            byte extracted = input[0] == 10 ? input[1] : input[0];
+            if (!Character.isAlphabetic(extracted)) {
                 return '-';
             }
-            return (char) input[0];
+            return (char) extracted;
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
