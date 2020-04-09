@@ -35,7 +35,6 @@ public class RoadGraph {
             if (alreadyConsist(entry.getKey()) && alreadyConsist(from)) {
                 result = true;
                 nodes.get(from).addRoadFromTo(entry.getKey(), entry.getValue());
-                nodes.get(entry.getKey()).addRoadToCurrent(from, entry.getValue());
             }
         }
         return result;
@@ -53,33 +52,24 @@ public class RoadGraph {
          */
         private final Map<String, Integer> roadsFromCurrent;
 
-        private final Map<String, Integer> roadsToCurrent;
-
         public Node(String name) {
             this.name = name;
             roadsFromCurrent = new HashMap<>();
-            roadsToCurrent = new HashMap<>();
         }
 
         public void addRoadFromTo(String roadTo, Integer weight) {
             roadsFromCurrent.put(roadTo, weight);
         }
 
-        public void addRoadToCurrent(String roadFrom, Integer weight) {
-            roadsToCurrent.put(roadFrom, weight);
-        }
-
-        public Integer getShortestWayToThis() {
-            Integer minWay = Integer.MAX_VALUE;
-            for (var entry : roadsToCurrent.entrySet()) {
-                if (entry.getValue() < minWay) {
-                    minWay = entry.getValue();
-                }
-            }
-            return minWay;
-        }
     }
 
+    /**
+     * Function to get all roads from Point to Point
+     * @param from point to start
+     * @param to point of finish
+     * @param visited visited points
+     * @return String of tree. Like [1, [2, 3 [4, end], 5, [6, end]]]
+     */
     String getAllPaths(String from, String to, Set<String> visited) {
         if (!alreadyConsist(from) || !alreadyConsist(to)) {
             throw new IllegalArgumentException();
