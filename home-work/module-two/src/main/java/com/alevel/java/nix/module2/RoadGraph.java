@@ -52,7 +52,7 @@ public class RoadGraph {
         return !names.add(name);
     }
 
-    public  class Node {
+    public class Node {
         private final String name;
 
         private final Integer number;
@@ -64,14 +64,11 @@ public class RoadGraph {
 
         private final Map<String, Integer> roadsToCurrent;
 
-        private Node minToCurrent;
-
         public Node(String name, Integer number) {
             this.name = name;
             this.number = number;
             roadsFromCurrent = new HashMap<>();
             roadsToCurrent = new HashMap<>();
-            minToCurrent = new Node("none", 0);
         }
 
         public void addRoadFromTo(String roadTo, Integer weight) {
@@ -84,9 +81,8 @@ public class RoadGraph {
 
         public Integer getShortestWayToThis() {
             Integer minWay = Integer.MAX_VALUE;
-            for(var entry : roadsToCurrent.entrySet()) {
-                if(entry.getValue() < minWay) {
-                    minToCurrent = nodes.get(entry.getKey());
+            for (var entry : roadsToCurrent.entrySet()) {
+                if (entry.getValue() < minWay) {
                     minWay = entry.getValue();
                 }
             }
@@ -94,52 +90,75 @@ public class RoadGraph {
         }
     }
 
-//    public Integer findShortestWay(String from, String to) {
-//        if (!alreadyConsist(from) || !alreadyConsist(to)) {
-//            throw new IllegalArgumentException();
-//        }
-//
-//        Node start = nodes.get(from);
-//        Node finish = nodes.get(to);
-//        Integer currentPointNumber = numbersOfPoints.get(from);
-//        Integer endPointNumber = numbersOfPoints.get(to);
-//        if(currentPointNumber > endPointNumber) {
-//            findShortestWay(to, from);
-//        }
-//        Node currentNode = new Node(start.name, start.number);
-//        Map<String, Integer> minWays = new HashMap<>();
-//        while(!currentNode.name.equals(finish.name)) {
-//            Node[] arrayNodes = new Node[currentNode.roadsFromCurrent.size()];
-//            int i = 0;
-//            for(var entry : currentNode.roadsFromCurrent.entrySet()) {
-//                arrayNodes[i] = nodes.get(entry.getKey());
-//                i++;
-//            }
-//
-//        }
-//        return 0;
-//    }
-
-    String func(String from, String to) {
+    String getAllPaths(String from, String to, Set<String> visited) {
         if (!alreadyConsist(from) || !alreadyConsist(to)) {
             throw new IllegalArgumentException();
         }
-        if(from.equals(to)) {
-            return to;
+        if (from.equals(to)) {
+            return "end";
         }
         Node start = nodes.get(from);
-        Set<String> visited = new HashSet<>();
-        visited.add(from);
+        if (!visited.add(from)) {
+            return "typic";
+        }
         List<String> road = new ArrayList<>();
-        for(var entry : start.roadsFromCurrent.entrySet()) {
-            if(visited.add(entry.getKey())) {
-                road.add(entry.getKey());
-                road.add(func(entry.getKey(), to));
+        for (var entry : start.roadsFromCurrent.entrySet()) {
+            road.add(entry.getKey());
+            String result = getAllPaths(entry.getKey(), to, visited);
+            if(result.equals("typic")) {
+                road = new ArrayList<>();
             } else {
-                return "typic";
+                road.add(result);
             }
+            visited.remove(entry.getKey());
         }
         return Arrays.toString(road.toArray());
+    }
+
+    List<List<String>> parsePaths(String from, String paths) {
+        String[] temps = paths.split(",");
+        paths = paths
+                .replaceAll(",", "")
+                .replaceAll("\\[", "")
+                .replaceAll("\\]", "");
+        StringBuilder stringBuilder = new StringBuilder(paths.length());
+        String[] points = paths.split(" ");
+        List<List<String>> executedPaths = new ArrayList<>();
+        List<String> path = new ArrayList<>();
+        path.add(from);
+        for (String point : points) {
+            if (point.equals("end")) {
+                executedPaths.add(path);
+                path = new ArrayList<>();
+                path.add(from);
+            } else {
+                path.add(point);
+            }
+        }
+        return executedPaths;
+    }
+
+    void func(String paths) {
+
+    }
+
+    Integer minWeightFromPaths(List<List<String>> executedPaths) {
+        Integer[] lengths = new Integer[executedPaths.size()];
+        int min = Integer.MAX_VALUE;
+        int minIndex = 0;
+        for(int i = 0; i < executedPaths.size(); i++) {
+            int length = 0;
+            for(int j = 0; j < executedPaths.get(i).size() - 1; j++) {
+                Node node = nodes.get(executedPaths.get(i).get(j));
+                length += node.roadsFromCurrent.get(executedPaths.get(i).get(j+1));
+            }
+            lengths[i] = length;
+            if(min > length) {
+                min = length;
+                minIndex = i;
+            }
+        }
+        return lengths[minIndex];
     }
 
     public static void main(String[] args) {
@@ -172,7 +191,9 @@ public class RoadGraph {
         roadsFromFifth.put("Third", 4);
         roadGraph.addRoadsFromTo("Fifth", roadsFromFifth);
 
-        System.out.println(roadGraph.func("Third", "Fifth"));
+        String result = roadGraph.getAllPaths("First", "Fifth", new HashSet<>());
+        List<List<String>> res = roadGraph.parsePaths("First", result);
+        System.out.println(roadGraph.minWeightFromPaths(res));
     }
 }
 
