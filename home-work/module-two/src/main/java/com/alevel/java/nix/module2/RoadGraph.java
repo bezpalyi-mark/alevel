@@ -8,24 +8,17 @@ public class RoadGraph {
 
     private final Map<String, Node> nodes;
 
-    private final Map<String, Integer> numbersOfPoints;
-
-    private Integer countNodes = 1;
-
     public RoadGraph() {
         names = new HashSet<>();
         nodes = new HashMap<>();
-        numbersOfPoints = new HashMap<>();
     }
 
     public boolean addNode(String name) {
         if (alreadyConsist(name)) {
             return false;
         }
-        Node node = new Node(name, countNodes);
+        Node node = new Node(name);
         nodes.put(name, node);
-        numbersOfPoints.put(name, countNodes);
-        countNodes++;
         return true;
     }
 
@@ -55,8 +48,6 @@ public class RoadGraph {
     public class Node {
         private final String name;
 
-        private final Integer number;
-
         /**
          * Roads. Consist 'Road to' -> 'Weight'
          */
@@ -64,9 +55,8 @@ public class RoadGraph {
 
         private final Map<String, Integer> roadsToCurrent;
 
-        public Node(String name, Integer number) {
+        public Node(String name) {
             this.name = name;
-            this.number = number;
             roadsFromCurrent = new HashMap<>();
             roadsToCurrent = new HashMap<>();
         }
@@ -105,7 +95,7 @@ public class RoadGraph {
         for (var entry : start.roadsFromCurrent.entrySet()) {
             road.add(entry.getKey());
             String result = getAllPaths(entry.getKey(), to, visited);
-            if(result.equals("typic")) {
+            if (result.equals("typic")) {
                 road = new ArrayList<>();
             } else {
                 road.add(result);
@@ -116,44 +106,59 @@ public class RoadGraph {
     }
 
     List<List<String>> parsePaths(String from, String paths) {
-        String[] temps = paths.split(",");
-        paths = paths
-                .replaceAll(",", "")
-                .replaceAll("\\[", "")
-                .replaceAll("\\]", "");
-        StringBuilder stringBuilder = new StringBuilder(paths.length());
-        String[] points = paths.split(" ");
+        if(paths.equals("end")) {
+            return null;
+        }
         List<List<String>> executedPaths = new ArrayList<>();
         List<String> path = new ArrayList<>();
-        path.add(from);
-        for (String point : points) {
-            if (point.equals("end")) {
+        LinkedList<String> tree = new LinkedList<>();
+        tree.addLast(from);
+        StringBuilder stringBuilder = new StringBuilder(paths.length());
+        boolean branching = false;
+        for (int i = 0; i < paths.length(); i++) {
+            if (paths.charAt(i) == '[' || branching) {
+                i++;
+                while (paths.charAt(i) != ',') {
+                    stringBuilder.append(paths.charAt(i));
+                    i++;
+                }
+                tree.addLast(stringBuilder.toString());
+                stringBuilder.replace(0, stringBuilder.length(), "");
+                branching = false;
+            } else if (paths.charAt(i) == ']') {
+                branching = true;
+                int count = 1;
+                i++;
+                while (i < paths.length() && paths.charAt(i) == ']') {
+                    count++;
+                    i++;
+                }
+                path.addAll(tree);
                 executedPaths.add(path);
                 path = new ArrayList<>();
-                path.add(from);
-            } else {
-                path.add(point);
+                for (int j = 0; j < count + 1; j++) {
+                    tree.removeLast();
+                }
             }
         }
         return executedPaths;
     }
 
-    void func(String paths) {
-
-    }
-
     Integer minWeightFromPaths(List<List<String>> executedPaths) {
+        if(executedPaths == null) {
+            return 0;
+        }
         Integer[] lengths = new Integer[executedPaths.size()];
         int min = Integer.MAX_VALUE;
         int minIndex = 0;
-        for(int i = 0; i < executedPaths.size(); i++) {
+        for (int i = 0; i < executedPaths.size(); i++) {
             int length = 0;
-            for(int j = 0; j < executedPaths.get(i).size() - 1; j++) {
+            for (int j = 0; j < executedPaths.get(i).size() - 1; j++) {
                 Node node = nodes.get(executedPaths.get(i).get(j));
-                length += node.roadsFromCurrent.get(executedPaths.get(i).get(j+1));
+                length += node.roadsFromCurrent.get(executedPaths.get(i).get(j + 1));
             }
             lengths[i] = length;
-            if(min > length) {
+            if (min > length) {
                 min = length;
                 minIndex = i;
             }
@@ -161,6 +166,11 @@ public class RoadGraph {
         return lengths[minIndex];
     }
 
+    /**
+     * If you want to see example of program word, run main
+     *
+     * @param args CLI
+     */
     public static void main(String[] args) {
         RoadGraph roadGraph = new RoadGraph();
         roadGraph.addNode("First");
@@ -196,5 +206,3 @@ public class RoadGraph {
         System.out.println(roadGraph.minWeightFromPaths(res));
     }
 }
-
-
