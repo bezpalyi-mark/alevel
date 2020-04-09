@@ -5,7 +5,6 @@ import com.alevel.java.nix.hangman.controller.SimpleHangmanGame;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 
@@ -14,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ConsoleHangmanTest {
 
     @Test
-    void simpleWin() throws IOException {
+    void simpleWin() {
         assertFalse(testWord("w o r d"));
         assertFalse(testWord("w u p o x b r m d"));
     }
@@ -60,5 +59,4 @@ class ConsoleHangmanTest {
         assertFalse(game.isLoose());
         assertFalse(game.nextStep('w'));
     }
-
 }
