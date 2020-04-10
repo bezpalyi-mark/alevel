@@ -1,0 +1,21 @@
+5
+Kurakhove
+1
+2 5
+Kiev
+2
+3 3
+4 8
+Zaporizza
+2
+2 5
+4 10
+Svetlovodsk
+1
+5 12
+Kharkiv
+1
+3 4
+2
+Kurakhove Kharkiv
+Kharkiv Svetlovodsk

@@ -1,22 +1,23 @@
-package com.alevel.java.nix.module2;
+package com.alevel.java.nix.module2.graph;
 
 import java.util.*;
 
-public class RoadGraph {
+public class Graph {
 
     private final Set<String> names;
 
     private final Map<String, Node> nodes;
 
-    public RoadGraph() {
+    public Graph() {
         names = new HashSet<>();
         nodes = new HashMap<>();
     }
 
     public boolean addNode(String name) {
-        if (alreadyConsist(name)) {
+        if (has(name)) {
             return false;
         }
+        names.add(name);
         Node node = new Node(name);
         nodes.put(name, node);
         return true;
@@ -32,7 +33,7 @@ public class RoadGraph {
     public boolean addRoadsFromTo(String from, Map<String, Integer> roadsToWeights) {
         boolean result = false;
         for (var entry : roadsToWeights.entrySet()) {
-            if (alreadyConsist(entry.getKey()) && alreadyConsist(from)) {
+            if (has(entry.getKey()) && has(from) && entry.getValue() < 200_000) {
                 result = true;
                 nodes.get(from).addRoadFromTo(entry.getKey(), entry.getValue());
             }
@@ -40,11 +41,11 @@ public class RoadGraph {
         return result;
     }
 
-    private boolean alreadyConsist(String name) {
-        return !names.add(name);
+    public boolean has(String name) {
+        return names.contains(name);
     }
 
-    public class Node {
+    public static class Node {
         private final String name;
 
         /**
@@ -57,21 +58,25 @@ public class RoadGraph {
             roadsFromCurrent = new HashMap<>();
         }
 
+        public Map<String, Integer> getRoadsFromCurrent() {
+            return roadsFromCurrent;
+        }
+
         public void addRoadFromTo(String roadTo, Integer weight) {
             roadsFromCurrent.put(roadTo, weight);
         }
-
     }
 
     /**
      * Function to get all roads from Point to Point
-     * @param from point to start
-     * @param to point of finish
+     *
+     * @param from    point to start
+     * @param to      point of finish
      * @param visited visited points
-     * @return String of tree. Like [1, [2, 3 [4, end], 5, [6, end]]]
+     * @return String of tree, like [bydgoszcz, [warszawa, end, torun, [warszawa, end]], torun, [warszawa, end, bydgoszcz, [warszawa, end]]]
      */
-    String getAllPaths(String from, String to, Set<String> visited) {
-        if (!alreadyConsist(from) || !alreadyConsist(to)) {
+    private String getAllPaths(String from, String to, Set<String> visited) {
+        if (!has(from) || !has(to)) {
             throw new IllegalArgumentException();
         }
         if (from.equals(to)) {
@@ -82,21 +87,30 @@ public class RoadGraph {
             return "typic";
         }
         List<String> road = new ArrayList<>();
+        String temp = "";
         for (var entry : start.roadsFromCurrent.entrySet()) {
             road.add(entry.getKey());
             String result = getAllPaths(entry.getKey(), to, visited);
             if (result.equals("typic")) {
-                road = new ArrayList<>();
+                road.remove(entry.getKey());
             } else {
                 road.add(result);
             }
-            visited.remove(entry.getKey());
+            temp = entry.getKey();
         }
+        visited.remove(temp);
         return Arrays.toString(road.toArray());
     }
 
-    List<List<String>> parsePaths(String from, String paths) {
-        if(paths.equals("end")) {
+    /**
+     * Function to parse result of function 'getAllPaths'
+     *
+     * @param from  point of beginning
+     * @param paths string with paths from 'getAllPaths'
+     * @return List of lists with paths.
+     */
+    private List<List<String>> parsePaths(String from, String paths) {
+        if (paths.equals("end") || paths.length() < 3) {
             return null;
         }
         List<List<String>> executedPaths = new ArrayList<>();
@@ -104,13 +118,18 @@ public class RoadGraph {
         LinkedList<String> tree = new LinkedList<>();
         tree.addLast(from);
         StringBuilder stringBuilder = new StringBuilder(paths.length());
+        StringBuilder endString = new StringBuilder(paths.length());
         boolean branching = false;
-        for (int i = 0; i < paths.length(); i++) {
-            if (paths.charAt(i) == '[' || branching) {
+        int endIndex = 0;
+        for (int i = 0; i < paths.length(); i++, endIndex++) {
+            endString.append(paths.charAt(i));
+            if ((paths.charAt(i) == '[' || branching) && paths.charAt(i) != ']') {
                 i++;
+                endString.append(paths.charAt(i));
                 while (paths.charAt(i) != ',') {
                     stringBuilder.append(paths.charAt(i));
                     i++;
+                    endString.append(paths.charAt(i));
                 }
                 tree.addLast(stringBuilder.toString());
                 stringBuilder.replace(0, stringBuilder.length(), "");
@@ -119,9 +138,13 @@ public class RoadGraph {
                 branching = true;
                 int count = 1;
                 i++;
+                endString.append(paths.charAt(i));
                 while (i < paths.length() && paths.charAt(i) == ']') {
                     count++;
                     i++;
+                    if (i < paths.length()) {
+                        endString.append(paths.charAt(i));
+                    }
                 }
                 path.addAll(tree);
                 executedPaths.add(path);
@@ -129,14 +152,31 @@ public class RoadGraph {
                 for (int j = 0; j < count + 1; j++) {
                     tree.removeLast();
                 }
+                endString = new StringBuilder(endString.toString().replace("end", ""));
+            }
+            if (endString.toString().contains("end") && paths.charAt(i + 1) != ']') {
+                path.addAll(tree);
+                executedPaths.add(path);
+                path = new ArrayList<>();
+                tree.removeLast();
+                i++;
+                endString.append(paths.charAt(i));
+                branching = true;
+                endString = new StringBuilder(endString.toString().replace("end", ""));
             }
         }
         return executedPaths;
     }
 
-    Integer minWeightFromPaths(List<List<String>> executedPaths) {
-        if(executedPaths == null) {
-            return 0;
+    /**
+     * Function looks for length of every path.
+     *
+     * @param executedPaths List of lists with paths.
+     * @return minimal length of paths and index of this path.
+     */
+    private List<Integer> minWeightFromPaths(List<List<String>> executedPaths) {
+        if (executedPaths == null) {
+            return new ArrayList<>();
         }
         Integer[] lengths = new Integer[executedPaths.size()];
         int min = Integer.MAX_VALUE;
@@ -153,7 +193,34 @@ public class RoadGraph {
                 minIndex = i;
             }
         }
-        return lengths[minIndex];
+        return Arrays.asList(lengths[minIndex], minIndex);
+    }
+
+    /**
+     * Function for users to getShortestWayWeight.
+     *
+     * @param from point where need to start.
+     * @param to   destination point.
+     * @return length of shortest way.
+     */
+    public GraphResult getShortestWay(String from, String to) {
+        String result = getAllPaths(from, to, new HashSet<>());
+        List<List<String>> parsedResult = parsePaths(from, result);
+        Objects.requireNonNull(parsedResult);
+        List<Integer> lenToIndex = minWeightFromPaths(parsedResult);
+        return new GraphResult(parsedResult.get(lenToIndex.get(1)), lenToIndex.get(0));
+    }
+
+    public Node getNode(String name) {
+        if (!has(name)) {
+            return null;
+        }
+        return nodes.get(name);
+    }
+
+
+    public List<List<String>> parse(String from, String paths) {
+        return parsePaths(from, paths);
     }
 
     /**
@@ -162,37 +229,37 @@ public class RoadGraph {
      * @param args CLI
      */
     public static void main(String[] args) {
-        RoadGraph roadGraph = new RoadGraph();
-        roadGraph.addNode("First");
-        roadGraph.addNode("Second");
-        roadGraph.addNode("Third");
-        roadGraph.addNode("Fourth");
-        roadGraph.addNode("Fifth");
+        Graph graph = new Graph();
+        graph.addNode("First");
+        graph.addNode("Second");
+        graph.addNode("Third");
+        graph.addNode("Fourth");
+        graph.addNode("Fifth");
 
         Map<String, Integer> roadsFromFirst = new HashMap<>();
         roadsFromFirst.put("Second", 5);
-        roadGraph.addRoadsFromTo("First", roadsFromFirst);
+        graph.addRoadsFromTo("First", roadsFromFirst);
 
         Map<String, Integer> roadsFromSecond = new HashMap<>();
         roadsFromSecond.put("Third", 3);
         roadsFromSecond.put("Fourth", 8);
-        roadGraph.addRoadsFromTo("Second", roadsFromSecond);
+        graph.addRoadsFromTo("Second", roadsFromSecond);
 
         Map<String, Integer> roadsFromThird = new HashMap<>();
         roadsFromThird.put("Second", 5);
         roadsFromThird.put("Fourth", 10);
-        roadGraph.addRoadsFromTo("Third", roadsFromThird);
+        graph.addRoadsFromTo("Third", roadsFromThird);
 
         Map<String, Integer> roadsFromFourth = new HashMap<>();
         roadsFromFourth.put("Fifth", 12);
-        roadGraph.addRoadsFromTo("Fourth", roadsFromFourth);
+        graph.addRoadsFromTo("Fourth", roadsFromFourth);
 
         Map<String, Integer> roadsFromFifth = new HashMap<>();
         roadsFromFifth.put("Third", 4);
-        roadGraph.addRoadsFromTo("Fifth", roadsFromFifth);
+        graph.addRoadsFromTo("Fifth", roadsFromFifth);
 
-        String result = roadGraph.getAllPaths("First", "Fifth", new HashSet<>());
-        List<List<String>> res = roadGraph.parsePaths("First", result);
-        System.out.println(roadGraph.minWeightFromPaths(res));
+        GraphResult shortestWay = graph.getShortestWay("First", "Fifth");
+        System.out.println(shortestWay.getPath());
+        System.out.println("Length: " + shortestWay.getLength());
     }
 }
