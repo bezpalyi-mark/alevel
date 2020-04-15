@@ -131,6 +131,6 @@ buildNumber.properties
 .flattened-pom.xml
 nioTestDestDir/
 nioTestDir/
-databases/graph/data/
+home-work/databases/graph/data/
 
 # End of https://www.gitignore.io/api/java,maven,intellij

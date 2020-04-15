@@ -4,14 +4,14 @@ import com.alevel.jdbcbox.DatabaseConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GraphRequest {
 
@@ -19,7 +19,8 @@ public class GraphRequest {
 
     private static final String REQUEST_CITIES_NAMES = "SELECT name FROM city ORDER BY id;";
 
-    private static final String REQUEST_CONNECTIONS = "SELECT from_city, to_city, cost FROM connection;";
+    private static final String REQUEST_CONNECTIONS = "SELECT from_city, to_city, cost FROM connection " +
+                                                      "ORDER BY from_city, to_city, cost";
 
     private static final String REQUEST_PROBLEMS = "SELECT from_city, to_city FROM problems ORDER BY id;";
 
@@ -109,6 +110,33 @@ public class GraphRequest {
             LOGGER.error("Failed to write impossible connection! {}", e.getMessage());
         }
         return result;
+    }
+
+    /**
+     * Executing sql script.
+     *
+     * @param pathToFile - path to sql script
+     * @throws IOException  - file not found
+     * @throws SQLException - sql error
+     */
+    public void executeSQLScript(final String pathToFile) throws IOException, SQLException {
+        FileInputStream fileReader = new FileInputStream(pathToFile);
+        byte[] buffer = new byte[fileReader.available()];
+        if(fileReader.read(buffer, 0, fileReader.available()) == -1) {
+            LOGGER.error("Failed to read file {}!", pathToFile);
+            return;
+        }
+        StringBuilder query = new StringBuilder();
+        for (byte b : buffer) {
+            query.append((char) b);
+        }
+        Statement statement = connection.createStatement();
+        String filteredQuery = query.toString();
+        filteredQuery = filteredQuery.replace("\n", " ");
+        StringTokenizer stringTokenizer = new StringTokenizer(filteredQuery, ";");
+        while (stringTokenizer.hasMoreTokens()) {
+            statement.execute(stringTokenizer.nextToken());
+        }
     }
 
 }

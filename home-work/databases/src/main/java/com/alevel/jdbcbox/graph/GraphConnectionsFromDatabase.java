@@ -48,4 +48,10 @@ public class GraphConnectionsFromDatabase {
     public int size() {
         return size;
     }
+
+    public void resetCounters() {
+        costCounter = 0;
+        fromCounter = 0;
+        toCounter = 0;
+    }
 }
