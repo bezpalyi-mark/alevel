@@ -206,7 +206,9 @@ public class Graph {
     public GraphResult getShortestWay(String from, String to) {
         String result = getAllPaths(from, to, new HashSet<>());
         List<List<String>> parsedResult = parsePaths(from, result);
-        Objects.requireNonNull(parsedResult);
+        if(parsedResult == null) {
+            return null;
+        }
         List<Integer> lenToIndex = minWeightFromPaths(parsedResult);
         return new GraphResult(parsedResult.get(lenToIndex.get(1)), lenToIndex.get(0));
     }

@@ -9,8 +9,12 @@ public class RoadGraph {
         Map<String, String> townsToSearch = graphFileParse.getTownsToSearch();
         for (var entry : townsToSearch.entrySet()) {
             GraphResult shortestWay = graph.getShortestWay(entry.getKey(), entry.getValue());
-            System.out.println(shortestWay.getPath());
-            System.out.println("Length: " + shortestWay.getLength());
+            if (shortestWay == null) {
+                System.out.println("Impossible connection!");
+            } else {
+                System.out.println(shortestWay.getPath());
+                System.out.println("Length: " + shortestWay.getLength());
+            }
         }
     }
 }

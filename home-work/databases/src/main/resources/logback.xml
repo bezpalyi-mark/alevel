@@ -1,0 +1,22 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.alevel.java.nix.homeworks.lesson9" level="INFO" additivity="false">
+        <appender name="ASYNC_TIC_TAC_TOE" class="ch.qos.logback.classic.AsyncAppender">
+            <appender name="TIC-TAC-TOE" class="ch.qos.logback.core.FileAppender">
+                <file>log/tic-tac-toe.txt</file>
+                <encoder>
+                    <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</pattern>
+                </encoder>
+            </appender>
+        </appender>
+    </logger>
+
+    <root level="info">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>

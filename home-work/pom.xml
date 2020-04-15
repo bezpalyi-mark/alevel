@@ -11,7 +11,9 @@
         <module>core</module>
         <module>module-one</module>
         <module>module-two</module>
+        <module>databases</module>
     </modules>
+
 
 
     <!-- Не собираем джарник, это родительский пом -->
