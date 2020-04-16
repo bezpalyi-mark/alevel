@@ -8,9 +8,13 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -79,10 +83,32 @@ class GraphRequestTest {
 
     @Test
     void getProblems() {
+        Map<Integer, Integer> expected = new HashMap<>();
+        expected.put(1, 4);
+        expected.put(2, 4);
+
+        assertEquals(expected, graphRequest.getProblems());
     }
 
     @Test
-    void writeFoundConnection() {
+    void writeFoundConnection() throws SQLException {
+        assertTrue(graphRequest.writeFoundConnection(1, 4));
+        assertTrue(graphRequest.writeFoundConnection(2, 10));
+
+        String query = "SELECT problem, min_cost FROM found_routes ORDER BY problem";
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+
+        assertTrue(resultSet.next());
+        assertEquals(1, resultSet.getInt("problem"));
+        assertEquals(4, resultSet.getInt("min_cost"));
+
+        assertTrue(resultSet.next());
+        assertEquals(2, resultSet.getInt("problem"));
+        assertEquals(10, resultSet.getInt("min_cost"));
+
+        assertFalse(resultSet.next());
+        statement.close();
     }
 
     @Test

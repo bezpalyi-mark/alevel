@@ -6,7 +6,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 
 public class GraphRequest {
@@ -83,30 +86,29 @@ public class GraphRequest {
     }
 
     public boolean writeFoundConnection(int problemId, int minCost) {
-        boolean result = false;
-        String insert = "INSERT INTO found_routes (problem, min_cost) VALUES (?, ?);";
+        boolean result = true;
+        String insert = String.format("INSERT INTO found_routes (problem, min_cost) VALUES (%d, %d);", problemId, minCost);
         try {
-            PreparedStatement statement = connection.prepareStatement(insert);
-            statement.setInt(1, problemId);
-            statement.setInt(2, minCost);
-            result = statement.execute(insert);
+            Statement statement = connection.createStatement();
+            statement.execute(insert);
             statement.close();
         } catch (SQLException e) {
             LOGGER.error("Failed to write found connection! {}", e.getMessage());
+            result = false;
         }
         return result;
     }
 
     public boolean writeImpossibleConnection(int problemId) {
-        boolean result = false;
-        String insert = "INSERT INTO impossible_routes (problem) VALUES (?);";
+        boolean result = true;
+        String insert = String.format("INSERT INTO impossible_routes (problem) VALUES (%d);", problemId);
         try {
-            PreparedStatement statement = connection.prepareStatement(insert);
-            statement.setInt(1, problemId);
-            result = statement.execute(insert);
+            Statement statement = connection.createStatement();
+            statement.execute(insert);
             statement.close();
         } catch (SQLException e) {
             LOGGER.error("Failed to write impossible connection! {}", e.getMessage());
+            result = false;
         }
         return result;
     }
