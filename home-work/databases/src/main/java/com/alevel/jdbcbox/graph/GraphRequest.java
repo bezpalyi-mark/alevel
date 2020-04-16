@@ -4,7 +4,6 @@ import com.alevel.jdbcbox.DatabaseConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -20,7 +19,7 @@ public class GraphRequest {
     private static final String REQUEST_CITIES_NAMES = "SELECT name FROM city ORDER BY id;";
 
     private static final String REQUEST_CONNECTIONS = "SELECT from_city, to_city, cost FROM connection " +
-                                                      "ORDER BY from_city, to_city, cost";
+            "ORDER BY from_city, to_city, cost";
 
     private static final String REQUEST_PROBLEMS = "SELECT from_city, to_city FROM problems ORDER BY id;";
 
@@ -122,7 +121,7 @@ public class GraphRequest {
     public void executeSQLScript(final String pathToFile) throws IOException, SQLException {
         FileInputStream fileReader = new FileInputStream(pathToFile);
         byte[] buffer = new byte[fileReader.available()];
-        if(fileReader.read(buffer, 0, fileReader.available()) == -1) {
+        if (fileReader.read(buffer, 0, fileReader.available()) == -1) {
             LOGGER.error("Failed to read file {}!", pathToFile);
             return;
         }
@@ -135,8 +134,10 @@ public class GraphRequest {
         filteredQuery = filteredQuery.replace("\n", " ");
         StringTokenizer stringTokenizer = new StringTokenizer(filteredQuery, ";");
         while (stringTokenizer.hasMoreTokens()) {
-            statement.execute(stringTokenizer.nextToken());
+            statement.addBatch(stringTokenizer.nextToken());
         }
+        statement.executeBatch();
+        statement.close();
     }
 
 }
