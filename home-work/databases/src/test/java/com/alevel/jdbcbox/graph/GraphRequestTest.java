@@ -109,9 +109,28 @@ class GraphRequestTest {
 
         assertFalse(resultSet.next());
         statement.close();
+
+        assertFalse(graphRequest.writeFoundConnection(5, 3)); //This problem doesn't exist
     }
 
     @Test
-    void writeImpossibleConnection() {
+    void writeImpossibleConnection() throws SQLException {
+        assertTrue(graphRequest.writeImpossibleConnection(1));
+        assertTrue(graphRequest.writeImpossibleConnection(2));
+
+        String query = "SELECT problem FROM impossible_routes ORDER BY problem";
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+
+        assertTrue(resultSet.next());
+        assertEquals(1, resultSet.getInt("problem"));
+
+        assertTrue(resultSet.next());
+        assertEquals(2, resultSet.getInt("problem"));
+
+        assertFalse(resultSet.next());
+        statement.close();
+
+        assertFalse(graphRequest.writeImpossibleConnection(5)); //This problem doesn't exist
     }
 }
