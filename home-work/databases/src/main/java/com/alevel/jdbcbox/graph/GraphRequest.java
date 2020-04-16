@@ -6,10 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.*;
 
 public class GraphRequest {
@@ -87,10 +84,12 @@ public class GraphRequest {
 
     public boolean writeFoundConnection(int problemId, int minCost) {
         boolean result = true;
-        String insert = String.format("INSERT INTO found_routes (problem, min_cost) VALUES (%d, %d);", problemId, minCost);
+        String insert = "INSERT INTO found_routes (problem, min_cost) VALUES (?, ?);";
         try {
-            Statement statement = connection.createStatement();
-            statement.execute(insert);
+            PreparedStatement statement = connection.prepareStatement(insert);
+            statement.setInt(1, problemId);
+            statement.setInt(2, minCost);
+            statement.executeUpdate();
             statement.close();
         } catch (SQLException e) {
             LOGGER.error("Failed to write found connection! {}", e.getMessage());
@@ -101,10 +100,11 @@ public class GraphRequest {
 
     public boolean writeImpossibleConnection(int problemId) {
         boolean result = true;
-        String insert = String.format("INSERT INTO impossible_routes (problem) VALUES (%d);", problemId);
+        String insert = "INSERT INTO impossible_routes (problem) VALUES (?);";
         try {
-            Statement statement = connection.createStatement();
-            statement.execute(insert);
+            PreparedStatement statement = connection.prepareStatement(insert);
+            statement.setInt(1, problemId);
+            statement.executeUpdate();
             statement.close();
         } catch (SQLException e) {
             LOGGER.error("Failed to write impossible connection! {}", e.getMessage());
