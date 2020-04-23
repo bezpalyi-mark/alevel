@@ -2,7 +2,7 @@ package com.alevel.java.nix.annotations;
 
 public class AppProperties {
 
-    @PropertyKey("bakery.number.of.nuns")
+    @PropertyKey("bakery.number.of.buns")
     public int numberOfBuns;
 
     @PropertyKey("bakery.cost.donut")

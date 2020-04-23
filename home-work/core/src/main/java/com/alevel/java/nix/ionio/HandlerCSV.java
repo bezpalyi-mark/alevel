@@ -93,4 +93,8 @@ public class HandlerCSV {
         return "";
     }
 
+    public int size() {
+        return extractedData.length;
+    }
+
 }
