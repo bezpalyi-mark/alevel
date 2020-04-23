@@ -77,8 +77,4 @@ public class InitFromCSV<T> {
         }
     }
 
-    private void initMap() {
-
-    }
-
 }
