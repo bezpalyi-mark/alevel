@@ -6,14 +6,36 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class InitFromCSV<T> {
 
     private HandlerCSV handlerCSV;
 
     private Class<T> tClass;
+
+    private Map<Class<?>, Setter> SETTERS = Map.ofEntries(
+            Map.entry(String.class, (target, field, value) -> field.set(target, value)),
+
+            Map.entry(int.class, ((target, field, value) -> field.setInt(target, Integer.parseInt(value)))),
+            Map.entry(Integer.class, (target, field, value) -> field.setInt(target, Integer.parseInt(value))),
+
+            Map.entry(float.class, (target, field, value) -> field.setFloat(target, Float.parseFloat(value))),
+            Map.entry(Float.class, (target, field, value) -> field.setFloat(target, Float.parseFloat(value))),
+
+            Map.entry(double.class, (target, field, value) -> field.setDouble(target, Double.parseDouble(value))),
+            Map.entry(Double.class, (target, field, value) -> field.setDouble(target, Double.parseDouble(value))),
+
+            Map.entry(boolean.class, (target, field, value) -> field.setBoolean(target, Boolean.parseBoolean(value))),
+            Map.entry(Boolean.class, (target, field, value) -> field.setBoolean(target, Boolean.parseBoolean(value))),
+
+            Map.entry(long.class, (target, field, value) -> field.setLong(target, Long.parseLong(value))),
+            Map.entry(Long.class, (target, field, value) -> field.setLong(target, Long.parseLong(value))),
+
+            Map.entry(char.class, (target, field, value) -> field.setChar(target, value.charAt(0))),
+            Map.entry(Character.class, (target, field, value) -> field.setChar(target, value.charAt(0)))
+    );
 
     public InitFromCSV(HandlerCSV handlerCSV, Class<T> tClass) {
         this.handlerCSV = handlerCSV;
@@ -42,28 +64,21 @@ public class InitFromCSV<T> {
                 Class<?> type = field.getType();
                 String value = handlerCSV.get(row, key.value());
                 if (value.isEmpty()) {
-                    value = "0";
+                    if (type == String.class) {
+                        field.set(target, "");
+                    }
+                    continue;
                 }
-                if (type == String.class) {
-                    field.set(target, value);
-                } else if (type == float.class) {
-                    field.setFloat(target, Float.parseFloat(value));
-                } else if (type == int.class) {
-                    field.setInt(target, Integer.parseInt(value));
-                } else if (type == double.class) {
-                    field.setDouble(target, Double.parseDouble(value));
-                } else if (type == char.class) {
-                    field.setChar(target, value.charAt(0));
-                } else if (type == long.class) {
-                    field.setLong(target, Long.parseLong(value));
-                } else if (type == boolean.class) {
-                    field.setBoolean(target, Boolean.parseBoolean(value));
-                }
+                SETTERS.get(type).set(target, field, value);
             }
             return target;
         } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
             throw new UnsupportedOperationException(e);
         }
+    }
+
+    private void initMap() {
+
     }
 
 }

@@ -11,7 +11,7 @@ public class AppStudents {
         HandlerCSV handlerCSV = new HandlerCSV(Paths.get("core/src/main/resources/fileToReadCSV.csv"));
         InitFromCSV<Student> initializer = new InitFromCSV<>(handlerCSV, Student.class);
         List<Student> students = initializer.getList();
-        for(Student student : students) {
+        for (Student student : students) {
             System.out.println(student);
         }
     }
