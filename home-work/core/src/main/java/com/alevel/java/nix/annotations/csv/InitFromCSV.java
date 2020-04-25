@@ -11,11 +11,11 @@ import java.util.Map;
 
 public class InitFromCSV<T> {
 
-    private HandlerCSV handlerCSV;
+    private final HandlerCSV handlerCSV;
 
-    private Class<T> tClass;
+    private final Class<T> tClass;
 
-    private Map<Class<?>, Setter> SETTERS = Map.ofEntries(
+    private final Map<Class<?>, Setter> SETTERS = Map.ofEntries(
             Map.entry(String.class, (target, field, value) -> field.set(target, value)),
 
             Map.entry(int.class, ((target, field, value) -> field.setInt(target, Integer.parseInt(value)))),
