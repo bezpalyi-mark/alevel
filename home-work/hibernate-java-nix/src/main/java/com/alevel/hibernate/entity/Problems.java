@@ -21,6 +21,12 @@ public class Problems {
     public Problems() {
     }
 
+    public Problems(Long id, City fromCity, City toCity) {
+        this.id = id;
+        this.fromCity = fromCity;
+        this.toCity = toCity;
+    }
+
     public Long getId() {
         return id;
     }
