@@ -12,6 +12,7 @@
         <module>module-one</module>
         <module>module-two</module>
         <module>databases</module>
+        <module>hibernate-java-nix</module>
     </modules>
 
 

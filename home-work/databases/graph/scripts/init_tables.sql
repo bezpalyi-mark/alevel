@@ -16,6 +16,5 @@ INSERT INTO connection (cost, from_city, to_city) VALUES (1, 1, 2),
                                                          (4, 4, 2),
                                                          (1, 4, 3);
 
-
 INSERT INTO problems (from_city, to_city) VALUES (1, 4),
                                                  (2, 4);
