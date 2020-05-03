@@ -22,11 +22,6 @@ public class EntitiesTests {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HibernateGraphApp.class);
 
-    @BeforeEach
-    void setUp() {
-
-    }
-
     @Test
     public void testEntities() {
 

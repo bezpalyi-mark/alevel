@@ -24,7 +24,7 @@ class HibernateGraphHandlerTests {
         City city3 = new City(3L, "New York");
 
         List<City> cityList = Arrays.asList(
-            city1, city2, city3
+                city1, city2, city3
         );
 
         Connection connection1 = new Connection();
@@ -38,7 +38,7 @@ class HibernateGraphHandlerTests {
         connection2.setToCity(city2);
 
         List<Connection> connectionList = Arrays.asList(
-            connection1, connection2
+                connection1, connection2
         );
 
         Map<String, Integer> road1 = new HashMap<>();
