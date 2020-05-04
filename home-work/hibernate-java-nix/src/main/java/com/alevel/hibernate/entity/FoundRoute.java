@@ -4,23 +4,21 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "found_routes")
-public class FoundRoutes {
+public class FoundRoute {
 
-    @EmbeddedId
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "problem_id")
-    private final RouteId problemId;
+    @Id
+    private Long id;
 
     @Column(name = "cost")
     private Integer minCost;
 
     @OneToOne
-    @JoinColumn(name = "problem_id")
-    @MapsId("prId")
-    private Problems problem;
+    @JoinColumn(name = "id")
+    @MapsId
+    private Problem problem;
 
-    public FoundRoutes() {
-        problemId = new RouteId();
+    public FoundRoute() {
+
     }
 
     public Integer getMinCost() {
@@ -31,11 +29,19 @@ public class FoundRoutes {
         this.minCost = minCost;
     }
 
-    public Problems getProblem() {
+    public Problem getProblem() {
         return problem;
     }
 
-    public void setProblem(Problems problemFk) {
+    public void setProblem(Problem problemFk) {
         this.problem = problemFk;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

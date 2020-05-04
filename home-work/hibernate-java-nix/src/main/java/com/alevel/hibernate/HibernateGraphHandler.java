@@ -2,7 +2,7 @@ package com.alevel.hibernate;
 
 import com.alevel.hibernate.entity.City;
 import com.alevel.hibernate.entity.Connection;
-import com.alevel.hibernate.entity.Problems;
+import com.alevel.hibernate.entity.Problem;
 import com.alevel.java.nix.module2.graph.Graph;
 
 import java.util.HashMap;
@@ -40,9 +40,9 @@ public class HibernateGraphHandler {
      * @param listProblems list with Problems.class.
      * @return converted into HashMap problems.
      */
-    public Map<Long, Long> mapProblems(List<Problems> listProblems) {
+    public Map<Long, Long> mapProblems(List<Problem> listProblems) {
         Map<Long, Long> problems = new HashMap<>();
-        for (Problems problem : listProblems) {
+        for (Problem problem : listProblems) {
             problems.put(problem.getFromCity().getId(), problem.getToCity().getId());
         }
         return problems;

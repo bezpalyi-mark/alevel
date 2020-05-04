@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "problems")
-public class Problems {
+public class Problem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,10 +18,10 @@ public class Problems {
     @JoinColumn(name = "to_city")
     private City toCity;
 
-    public Problems() {
+    public Problem() {
     }
 
-    public Problems(Long id, City fromCity, City toCity) {
+    public Problem(Long id, City fromCity, City toCity) {
         this.id = id;
         this.fromCity = fromCity;
         this.toCity = toCity;

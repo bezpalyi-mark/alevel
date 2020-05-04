@@ -4,7 +4,6 @@ import com.alevel.hibernate.HibernateGraphApp;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,36 +58,36 @@ public class EntitiesTests {
                 connection1, connection2
         );
 
-        Problems problem1 = new Problems();
+        Problem problem1 = new Problem();
         problem1.setId(1L);
         problem1.setFromCity(city1);
         problem1.setToCity(city2);
 
-        Problems problem2 = new Problems();
+        Problem problem2 = new Problem();
         problem2.setId(2L);
         problem2.setFromCity(city3);
         problem2.setToCity(city4);
 
-        List<Problems> problemsExpected = Arrays.asList(
+        List<Problem> problemExpected = Arrays.asList(
                 problem1, problem2
         );
 
-        FoundRoutes foundRoute = new FoundRoutes();
+        FoundRoute foundRoute = new FoundRoute();
         foundRoute.setMinCost(32);
         foundRoute.setProblem(problem1);
 
-        List<FoundRoutes> foundRoutesExpected = Collections.singletonList(foundRoute);
+        List<FoundRoute> foundRouteExpected = Collections.singletonList(foundRoute);
 
-        ImpossibleRoutes impossibleRoute = new ImpossibleRoutes();
+        ImpossibleRoute impossibleRoute = new ImpossibleRoute();
         impossibleRoute.setProblem(problem2);
 
-        List<ImpossibleRoutes> impossibleRoutesExpected = Collections.singletonList(impossibleRoute);
+        List<ImpossibleRoute> impossibleRouteExpected = Collections.singletonList(impossibleRoute);
 
         List<City> actualCities = null;
         List<Connection> actualConnections = null;
-        List<Problems> actualProblems = null;
-        List<FoundRoutes> actualFoundRouts = null;
-        List<ImpossibleRoutes> actualImpossibleRouts = null;
+        List<Problem> actualProblems = null;
+        List<FoundRoute> actualFoundRouts = null;
+        List<ImpossibleRoute> actualImpossibleRouts = null;
 
         File cfgFile = new File("./src/test/resources/hibernate.cfg.xml");
         Configuration cfg = new Configuration().configure(cfgFile);
@@ -109,19 +108,19 @@ public class EntitiesTests {
                 session.getTransaction().commit();
 
                 actualCities = session
-                        .createQuery("from City", City.class)
+                        .createQuery("from City ORDER BY id", City.class)
                         .list();
                 actualConnections = session
                         .createQuery("from Connection ORDER BY cost", Connection.class)
                         .list();
                 actualProblems = session
-                        .createQuery("from Problems", Problems.class)
+                        .createQuery("from Problem", Problem.class)
                         .list();
                 actualFoundRouts = session
-                        .createQuery("from FoundRoutes", FoundRoutes.class)
+                        .createQuery("from FoundRoute", FoundRoute.class)
                         .list();
                 actualImpossibleRouts = session
-                        .createQuery("from ImpossibleRoutes", ImpossibleRoutes.class)
+                        .createQuery("from ImpossibleRoute", ImpossibleRoute.class)
                         .list();
 
             } catch (Exception e) {
@@ -143,32 +142,32 @@ public class EntitiesTests {
         }
 
         assertNotNull(actualProblems);
-        for (int i = 0; i < problemsExpected.size(); i++) {
-            assertEquals(problemsExpected.get(i).getFromCity().getName(), actualProblems.get(i).getFromCity().getName());
-            assertEquals(problemsExpected.get(i).getToCity().getName(), actualProblems.get(i).getToCity().getName());
+        for (int i = 0; i < problemExpected.size(); i++) {
+            assertEquals(problemExpected.get(i).getFromCity().getName(), actualProblems.get(i).getFromCity().getName());
+            assertEquals(problemExpected.get(i).getToCity().getName(), actualProblems.get(i).getToCity().getName());
         }
 
         assertNotNull(actualFoundRouts);
-        for (int i = 0; i < foundRoutesExpected.size(); i++) {
-            assertEquals(foundRoutesExpected.get(i).getMinCost(), actualFoundRouts.get(i).getMinCost());
+        for (int i = 0; i < foundRouteExpected.size(); i++) {
+            assertEquals(foundRouteExpected.get(i).getMinCost(), actualFoundRouts.get(i).getMinCost());
             assertEquals(
-                    foundRoutesExpected.get(i).getProblem().getFromCity().getName(),
+                    foundRouteExpected.get(i).getProblem().getFromCity().getName(),
                     actualFoundRouts.get(i).getProblem().getFromCity().getName()
             );
             assertEquals(
-                    foundRoutesExpected.get(i).getProblem().getToCity().getName(),
+                    foundRouteExpected.get(i).getProblem().getToCity().getName(),
                     actualFoundRouts.get(i).getProblem().getToCity().getName()
             );
         }
 
         assertNotNull(actualImpossibleRouts);
-        for (int i = 0; i < impossibleRoutesExpected.size(); i++) {
+        for (int i = 0; i < impossibleRouteExpected.size(); i++) {
             assertEquals(
-                    impossibleRoutesExpected.get(i).getProblem().getFromCity().getName(),
+                    impossibleRouteExpected.get(i).getProblem().getFromCity().getName(),
                     actualImpossibleRouts.get(i).getProblem().getFromCity().getName()
             );
             assertEquals(
-                    impossibleRoutesExpected.get(i).getProblem().getToCity().getName(),
+                    impossibleRouteExpected.get(i).getProblem().getToCity().getName(),
                     actualImpossibleRouts.get(i).getProblem().getToCity().getName()
             );
         }

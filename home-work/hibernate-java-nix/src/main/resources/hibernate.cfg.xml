@@ -13,9 +13,9 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <mapping class="com.alevel.hibernate.entity.City"/>
         <mapping class="com.alevel.hibernate.entity.Connection"/>
-        <mapping class="com.alevel.hibernate.entity.Problems"/>
-        <mapping class="com.alevel.hibernate.entity.FoundRoutes"/>
-        <mapping class="com.alevel.hibernate.entity.ImpossibleRoutes"/>
+        <mapping class="com.alevel.hibernate.entity.Problem"/>
+        <mapping class="com.alevel.hibernate.entity.FoundRoute"/>
+        <mapping class="com.alevel.hibernate.entity.ImpossibleRoute"/>
 
     </session-factory>
 

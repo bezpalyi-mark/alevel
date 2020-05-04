@@ -48,7 +48,7 @@ public class HibernateGraphApp {
                 //Getting all cities, connections and problems
                 List<City> listCities = session.createQuery("from City", City.class).list();
                 List<Connection> listConnections = session.createQuery("from Connection", Connection.class).list();
-                List<Problems> listProblems = session.createQuery("from Problems", Problems.class).list();
+                List<Problem> listProblems = session.createQuery("from Problem", Problem.class).list();
 
                 //Assert data not null
                 if (listCities == null || listConnections == null || listProblems == null) {
@@ -73,13 +73,13 @@ public class HibernateGraphApp {
 
                     //if way does not exist, write information to impossible_routes table
                     if (shortestWay == null) {
-                        ImpossibleRoutes impossibleRoute = new ImpossibleRoutes();
+                        ImpossibleRoute impossibleRoute = new ImpossibleRoute();
                         impossibleRoute.setProblem(listProblems.get(idCounter));
                         session.save(impossibleRoute);
                     } else {
 
                         //if way exists, write information to found_routes table
-                        FoundRoutes foundRoute = new FoundRoutes();
+                        FoundRoute foundRoute = new FoundRoute();
                         foundRoute.setProblem(listProblems.get(idCounter));
                         foundRoute.setMinCost(shortestWay.getLength());
                         session.save(foundRoute);

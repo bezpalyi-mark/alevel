@@ -2,7 +2,7 @@ package com.alevel.hibernate;
 
 import com.alevel.hibernate.entity.City;
 import com.alevel.hibernate.entity.Connection;
-import com.alevel.hibernate.entity.Problems;
+import com.alevel.hibernate.entity.Problem;
 import com.alevel.java.nix.module2.graph.Graph;
 import org.junit.jupiter.api.Test;
 
@@ -64,10 +64,10 @@ class HibernateGraphHandlerTests {
         City city2 = new City(2L, "Odessa");
         City city3 = new City(3L, "New York");
 
-        List<Problems> problemsList = Arrays.asList(
-                new Problems(1L, city2, city3),
-                new Problems(2L, city1, city2),
-                new Problems(3L, city3, city2)
+        List<Problem> problemList = Arrays.asList(
+                new Problem(1L, city2, city3),
+                new Problem(2L, city1, city2),
+                new Problem(3L, city3, city2)
         );
 
         Map<Long, Long> expected = Map.ofEntries(
@@ -76,6 +76,6 @@ class HibernateGraphHandlerTests {
                 Map.entry(3L, 2L)
         );
 
-        assertEquals(expected, graphHandler.mapProblems(problemsList));
+        assertEquals(expected, graphHandler.mapProblems(problemList));
     }
 }
