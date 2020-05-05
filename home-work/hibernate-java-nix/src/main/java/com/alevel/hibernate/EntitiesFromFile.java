@@ -62,6 +62,7 @@ public class EntitiesFromFile {
             int problemsSize = scanner.nextInt();
             for (int i = 0; i < problemsSize; i++) {
                 Problem problem = new Problem();
+                problem.setId((long) i + 1);
                 int indexFrom = cityNameIndex.get(scanner.next());
                 problem.setFromCity(cities.get(indexFrom));
                 int indexTo = cityNameIndex.get(scanner.next());

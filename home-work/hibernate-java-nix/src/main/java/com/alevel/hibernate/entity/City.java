@@ -3,6 +3,7 @@ package com.alevel.hibernate.entity;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "city")
@@ -40,4 +41,17 @@ public class City {
         this.name = name;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof City)) return false;
+        City city = (City) o;
+        return getId().equals(city.getId()) &&
+                getName().equals(city.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName());
+    }
 }

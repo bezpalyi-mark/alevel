@@ -4,6 +4,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "connection")
@@ -14,6 +15,10 @@ public class Connection implements Serializable {
 
     public Connection() {
         id = new ConnectionId();
+    }
+
+    public Connection(ConnectionId id) {
+        this.id = id;
     }
 
     public Integer getCost() {
@@ -38,6 +43,19 @@ public class Connection implements Serializable {
 
     public void setToCity(City toCity) {
         this.id.setToCity(toCity);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Connection)) return false;
+        Connection that = (Connection) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
 

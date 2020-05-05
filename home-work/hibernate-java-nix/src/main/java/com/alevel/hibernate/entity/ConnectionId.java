@@ -5,6 +5,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 public class ConnectionId implements Serializable {
@@ -18,6 +19,15 @@ public class ConnectionId implements Serializable {
     @ManyToOne
     @JoinColumn(name = "to_city")
     private City toCity;
+
+    public ConnectionId() {
+    }
+
+    public ConnectionId(Integer cost, City fromCity, City toCity) {
+        this.cost = cost;
+        this.fromCity = fromCity;
+        this.toCity = toCity;
+    }
 
     public Integer getCost() {
         return cost;
@@ -41,5 +51,20 @@ public class ConnectionId implements Serializable {
 
     public void setToCity(City toCity) {
         this.toCity = toCity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ConnectionId)) return false;
+        ConnectionId that = (ConnectionId) o;
+        return getCost().equals(that.getCost()) &&
+                getFromCity().equals(that.getFromCity()) &&
+                getToCity().equals(that.getToCity());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCost(), getFromCity(), getToCity());
     }
 }

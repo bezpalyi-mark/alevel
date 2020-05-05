@@ -1,6 +1,7 @@
 package com.alevel.hibernate.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "found_routes")
@@ -43,5 +44,20 @@ public class FoundRoute {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FoundRoute)) return false;
+        FoundRoute that = (FoundRoute) o;
+        return getId().equals(that.getId()) &&
+                getMinCost().equals(that.getMinCost()) &&
+                getProblem().equals(that.getProblem());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getMinCost(), getProblem());
     }
 }
