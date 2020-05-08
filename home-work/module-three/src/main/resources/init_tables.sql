@@ -1,35 +1,36 @@
 INSERT INTO user(id, email, phoneNumber, name, patronymic, surname)
-VALUES (1, 'user#1@gmail.com', '+380664346712', 'Andrii', 'Viktorovich', 'Hulyashkin');
+VALUES (1, 'user1@gmail.com', '+380664346712', 'Andrii', 'Viktorovich', 'Hulyashkin'),
+       (2, 'user2@gmail.com', '+380522546712', 'Dima', 'Leonidovich', 'Chebryakov'),
+       (3, 'user3@gmail.com', '+380522593658', 'Leonid', 'Dmitrievich', 'Veselchakov');
 INSERT INTO account(id, balance, user_id)
-VALUES (1, 10000, 1),
-       (2, 1000, 1),
-       (3, 100000, 1),
+VALUES (1, 1020, 1),
+       (2, 1000, 2),
+       (3, 100000, 3),
        (4, 3500, 1),
-       (5, 190000, 1);
+       (5, 190000, 2);
 INSERT INTO category(dtype, id, name)
-VALUES ('Profit', 1, 'salary'),
-       ('Profit', 2, 'sell'),
-       ('Profit', 3, 'transferIN'),
-       ('Consumption', 4, 'penalty'),
-       ('Consumption', 5, 'buy'),
-       ('Consumption', 6, 'transferOUT');
+VALUES ('Profit', 1, 'scholarship'),
+       ('Profit', 2, 'side_job'),
+       ('Profit', 3, 'bank_receipts'),
+       ('Consumption', 4, 'shopping'),
+       ('Consumption', 5, 'rent'),
+       ('Consumption', 6, 'driveway');
 INSERT INTO operation(id, instant, value, account_id)
-VALUES (1, '2010-03-01 13:56:01', 1000, 1),
-       (2, '2002-12-10 08:34:44', -500, 2),
-       (3, '2018-06-06 23:44:17', 800, 3),
-       (4, '2019-01-01 20:20:20', 12500, 4),
-       (5, '2020-02-03 19:21:01', -10000, 5),
-       (6, '2020-04-05 06:34:51', 8000, 1),
-       (7, '2020-05-05 00:00:01', 199999, 2),
-       (8, NOW(), -99999, 3),
-       (9, NOW(), 12, 4);
+VALUES (1, '2011-05-01 15:12:12', 1200, 1),
+       (2, '2013-10-23 11:24:48', -2500, 5),
+       (3, '2000-02-06 21:14:27', 8100, 3),
+       (4, '2014-01-01 20:21:29', 1570, 4),
+       (5, '2010-12-03 12:21:21', -10000, 2),
+       (6, '2020-05-05 10:00:01', 2009, 2),
+       (7,'2015-09-08 03:05:12', 20131, 3),
+       (8, '2016-09-12 05:12:12', -1122, 4);
 INSERT INTO operation_category(operation_id, categories_id, categories_name)
-VALUES (1, 1, 'salary'),
-       (2, 5, 'buy'),
-       (3, 3, 'transferIN'),
-       (4, 2, 'sell'),
-       (5, 4, 'penalty'),
-       (6, 1, 'salary'),
-       (7, 3, 'transferIN'),
-       (8, 5, 'buy'),
-       (9, 1, 'salary');
+VALUES (1, 1, 'scholarship'),
+       (2, 5, 'rent'),
+       (3, 3, 'bank_receipts'),
+       (4, 2, 'side_job'),
+       (4, 1, 'scholarship'),
+       (5, 4, 'shopping'),
+       (6, 1, 'scholarship'),
+       (7, 3, 'bank_receipts'),
+       (8, 5, 'rent');

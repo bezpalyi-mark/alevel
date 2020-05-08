@@ -1,5 +1,7 @@
 package com.alevel.java.nix.dzenmoney.view;
 
+import com.alevel.java.nix.dzenmoney.SecurityGuard;
+
 import java.util.List;
 
 public class ConsoleMenuView {
@@ -21,5 +23,15 @@ public class ConsoleMenuView {
     public void printCategories(List<String> categories) {
         System.out.println("Choose category: ");
         System.out.println(categories);
+    }
+
+    public void printExportMenu() {
+        System.out.println("Your accounts: " +
+                SecurityGuard.getACCEPTABLE_ACCOUNT_IDs());
+        System.out.println("Enter account id: ");
+    }
+
+    public void print(String s) {
+        System.out.println(s);
     }
 }
