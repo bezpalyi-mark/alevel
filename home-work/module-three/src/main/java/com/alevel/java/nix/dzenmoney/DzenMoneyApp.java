@@ -13,11 +13,11 @@ public class DzenMoneyApp {
     private static final Logger logger = LoggerFactory.getLogger(DzenMoneyApp.class);
 
     public static void main(String[] args) {
-        if(args.length < 3) {
+        if (args.length < 3) {
             logger.error("Too few arguments, expected 3, gives: {}", args.length);
             return;
         }
-        if(!SecurityGuard.verifyEmail(args[0])) {
+        if (!SecurityGuard.verifyEmail(args[0])) {
             logger.error("Invalid email!");
             return;
         }

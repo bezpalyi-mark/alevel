@@ -1,7 +1,10 @@
 package com.alevel.java.nix.dzenmoney.controller;
 
 import com.alevel.java.nix.dzenmoney.SecurityGuard;
-import com.alevel.java.nix.dzenmoney.model.*;
+import com.alevel.java.nix.dzenmoney.model.Category;
+import com.alevel.java.nix.dzenmoney.model.Consumption;
+import com.alevel.java.nix.dzenmoney.model.Operation;
+import com.alevel.java.nix.dzenmoney.model.Profit;
 import com.alevel.java.nix.dzenmoney.view.ConsoleMenuView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,13 +101,18 @@ public class OperationCreator {
     }
 
     public Long readId(Scanner scanner) {
+        view.print("Your accounts Ids: " + SecurityGuard.getACCEPTABLE_ACCOUNT_IDs());
         System.out.println("Enter account ID:");
         boolean acceptable = false;
         long value = 0L;
         while (!acceptable) {
             try {
                 value = scanner.nextLong();
-                acceptable = true;
+                if (SecurityGuard.verifyAccountId(value)) {
+                    acceptable = true;
+                } else {
+                    logger.warn("Not acceptable account!");
+                }
             } catch (InputMismatchException e) {
                 logger.warn("Incorrect input");
             }

@@ -20,23 +20,23 @@ public class CsvWriter {
 
     public static void writeExportOrders(Map<Long, ExportOrders> ordersMap, String path) {
         File file = new File(path);
-        if(file.exists()) {
-            if(!file.delete()) {
+        if (file.exists()) {
+            if (!file.delete()) {
                 logger.error("Cannot delete existing file");
                 return;
             }
         }
         try {
-            if(file.createNewFile()) {
+            if (file.createNewFile()) {
                 logger.info("file {} was created", path);
             }
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(headers).append('\n');
-            for(var order : ordersMap.entrySet()) {
-                 stringBuilder.append(order.getValue().getId()).append(',');
-                 stringBuilder.append(order.getValue().getInstance()).append(',');
-                 stringBuilder.append(order.getValue().getValue()).append(',');
-                 stringBuilder.append('\n');
+            for (var order : ordersMap.entrySet()) {
+                stringBuilder.append(order.getValue().getId()).append(',');
+                stringBuilder.append(order.getValue().getInstance()).append(',');
+                stringBuilder.append(order.getValue().getValue()).append(',');
+                stringBuilder.append('\n');
             }
             stringBuilder.append(" ,").append(" ,").append(" ,")
                     .append(calculateRevenue(ordersMap)).append(",").append(calculateBalance(ordersMap));
@@ -54,7 +54,7 @@ public class CsvWriter {
         BigDecimal result = BigDecimal.ONE;
         for (var order : ordersMap.entrySet()) {
             BigDecimal value = order.getValue().getValue();
-            if(value.compareTo(BigDecimal.ZERO) > 0) {
+            if (value.compareTo(BigDecimal.ZERO) > 0) {
                 result = result.add(value);
             }
         }

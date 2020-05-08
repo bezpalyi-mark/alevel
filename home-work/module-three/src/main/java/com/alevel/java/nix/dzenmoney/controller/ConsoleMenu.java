@@ -1,5 +1,6 @@
 package com.alevel.java.nix.dzenmoney.controller;
 
+import com.alevel.java.nix.dzenmoney.SecurityGuard;
 import com.alevel.java.nix.dzenmoney.model.ExportOrders;
 import com.alevel.java.nix.dzenmoney.view.ConsoleMenuView;
 import org.hibernate.SessionFactory;
@@ -40,6 +41,10 @@ public class ConsoleMenu {
                 case 2:
                     view.printExportMenu();
                     int accountId = scanner.nextInt();
+                    if (!SecurityGuard.verifyAccountId((long) accountId)) {
+                        logger.warn("Not valid account!");
+                        continue;
+                    }
                     view.print("Enter BEGIN date in format yyyy-MM-dd");
                     String dateFrom = scanner.next();
                     view.print("Enter END date in format yyyy-MM-dd");

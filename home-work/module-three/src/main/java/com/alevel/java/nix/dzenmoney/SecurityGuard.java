@@ -1,18 +1,14 @@
 package com.alevel.java.nix.dzenmoney;
 
-import com.alevel.java.nix.dzenmoney.controller.HibernateDzenMoney;
-import com.alevel.java.nix.dzenmoney.model.Category;
 import com.alevel.java.nix.dzenmoney.model.Operation;
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class SecurityGuard {
-    private static final Logger logger = LoggerFactory.getLogger(HibernateDzenMoney.class);
+    private static final Logger logger = LoggerFactory.getLogger(SecurityGuard.class);
 
     private static final Set<Long> ACCEPTABLE_ACCOUNT_IDs = new HashSet<>();
 

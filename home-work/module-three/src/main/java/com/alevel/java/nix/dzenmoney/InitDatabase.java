@@ -3,7 +3,6 @@ package com.alevel.java.nix.dzenmoney;
 import com.alevel.java.nix.dzenmoney.model.Account;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +31,7 @@ public class InitDatabase {
 
                 String query = String.format("FROM Account WHERE user.email = '%s'", email);
                 List<Account> accountList = session.createQuery(query, Account.class).list();
-                for(Account account : accountList) {
+                for (Account account : accountList) {
                     SecurityGuard.addACCEPTABLE_ACCOUNT_IDs(account.getId());
                 }
             }
