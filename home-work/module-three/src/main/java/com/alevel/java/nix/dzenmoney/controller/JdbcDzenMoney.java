@@ -1,6 +1,6 @@
 package com.alevel.java.nix.dzenmoney.controller;
 
-import com.alevel.java.nix.dzenmoney.model.ExportOrders;
+import com.alevel.java.nix.dzenmoney.model.ExportOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,11 +35,11 @@ public class JdbcDzenMoney {
         }
     }
 
-    public Map<Long, ExportOrders> getOperations(Long accountId, String dateFrom, String dateTo) {
+    public Map<Long, ExportOrder> getOperations(Long accountId, String dateFrom, String dateTo) {
         String query = String.format("SELECT operation.id, instant, value, oc.categories_name as category FROM operation LEFT JOIN operation_category oc ON operation.id = oc.Operation_id " +
                 "LEFT JOIN account a on operation.account_id = a.id WHERE  account_id = %d " +
                 "AND operation.instant > '%s' AND operation.instant < '%s';", accountId, dateFrom, dateTo);
-        Map<Long, ExportOrders> ordersMap = new HashMap<>();
+        Map<Long, ExportOrder> ordersMap = new HashMap<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -48,9 +48,9 @@ public class JdbcDzenMoney {
                 String instance = resultSet.getTimestamp("instant").toString();
                 BigDecimal value = resultSet.getBigDecimal("value");
                 String category = resultSet.getString("category");
-                ExportOrders order = ordersMap.get(id);
+                ExportOrder order = ordersMap.get(id);
                 if (order == null) {
-                    ordersMap.put(id, ExportOrders.of(id, instance, value, category));
+                    ordersMap.put(id, ExportOrder.of(id, instance, value, category));
                 } else {
                     order.addCategory(category);
                 }

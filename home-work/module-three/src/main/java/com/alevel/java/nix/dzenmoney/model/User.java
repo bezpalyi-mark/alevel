@@ -59,14 +59,29 @@ public class User {
         accounts.add(account);
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
         return getId().equals(user.getId()) &&
-                getUsername().equals(user.getUsername()) &&
-                getAccounts().equals(user.getAccounts());
+                getUsername().equals(user.getUsername());
     }
 
     @Override

@@ -26,7 +26,7 @@ public class DzenMoneyApp {
         cfg.getProperties().setProperty("hibernate.connection.password", args[2]);
         ConsoleMenu menu = new ConsoleMenu();
         try (SessionFactory sessionFactory = cfg.buildSessionFactory()) {
-            InitDatabase.load(sessionFactory, args[0]);
+            InitDatabase.load(sessionFactory, args[0], "/init_tables.sql", InitDatabase.class);
             menu.run(sessionFactory, args[1], args[2], "./module-three/output.csv");
         } catch (IOException e) {
             logger.error(e.getMessage());

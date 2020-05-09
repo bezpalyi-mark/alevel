@@ -14,9 +14,9 @@ import static com.alevel.hibernate.HibernateGraphApp.readSQLScript;
 public class InitDatabase {
     private static final Logger logger = LoggerFactory.getLogger(InitDatabase.class);
 
-    public static void load(SessionFactory sessionFactory, String email) throws IOException {
+    public static void load(SessionFactory sessionFactory, String email, String path, Class<?> sourceClass) throws IOException {
         try (Session session = sessionFactory.openSession()) {
-            List<String> list = readSQLScript(InitDatabase.class.getResource("/init_tables.sql").getPath());
+            List<String> list = readSQLScript(sourceClass.getResource(path).getPath());
             if (list != null) {
                 try {
                     session.beginTransaction();

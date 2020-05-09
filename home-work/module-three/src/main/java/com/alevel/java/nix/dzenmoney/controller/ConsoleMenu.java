@@ -1,7 +1,7 @@
 package com.alevel.java.nix.dzenmoney.controller;
 
 import com.alevel.java.nix.dzenmoney.SecurityGuard;
-import com.alevel.java.nix.dzenmoney.model.ExportOrders;
+import com.alevel.java.nix.dzenmoney.model.ExportOrder;
 import com.alevel.java.nix.dzenmoney.view.ConsoleMenuView;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -49,7 +49,7 @@ public class ConsoleMenu {
                     String dateFrom = scanner.next();
                     view.print("Enter END date in format yyyy-MM-dd");
                     String endDate = scanner.next();
-                    Map<Long, ExportOrders> operations = jdbc.getOperations((long) accountId, dateFrom, endDate);
+                    Map<Long, ExportOrder> operations = jdbc.getOperations((long) accountId, dateFrom, endDate);
                     CsvWriter.writeExportOrders(operations, path);
                     break;
                 case 3:

@@ -78,8 +78,14 @@ public class HibernateDzenMoney {
             session.beginTransaction();
             for (String category : categories) {
                 String query = String.format("from Category WHERE name = '%s' ", category.toLowerCase());
-
-                if (session.createQuery(query, Category.class) == null) return false;
+                Query<Category> categoryQuery = session.createQuery(query, Category.class);
+                try {
+                    categoryQuery.getSingleResult();
+                } catch (Exception e) {
+                    logger.error("No such category");
+                    session.getTransaction().commit();
+                    return false;
+                }
             }
             session.getTransaction().commit();
         } catch (Exception e) {

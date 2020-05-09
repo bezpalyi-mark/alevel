@@ -2,6 +2,7 @@ package com.alevel.java.nix.dzenmoney.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 public class CategoryID implements Serializable {
@@ -35,5 +36,17 @@ public class CategoryID implements Serializable {
         this.name = name;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CategoryID)) return false;
+        CategoryID that = (CategoryID) o;
+        return getId().equals(that.getId()) &&
+                getName().equals(that.getName());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName());
+    }
 }

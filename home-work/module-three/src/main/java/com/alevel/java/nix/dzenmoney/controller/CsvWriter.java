@@ -1,6 +1,6 @@
 package com.alevel.java.nix.dzenmoney.controller;
 
-import com.alevel.java.nix.dzenmoney.model.ExportOrders;
+import com.alevel.java.nix.dzenmoney.model.ExportOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +18,7 @@ public class CsvWriter {
 
     private static final String headers = "id,instant,value,revenue,balance,";
 
-    public static void writeExportOrders(Map<Long, ExportOrders> ordersMap, String path) {
+    public static void writeExportOrders(Map<Long, ExportOrder> ordersMap, String path) {
         File file = new File(path);
         if (file.exists()) {
             if (!file.delete()) {
@@ -50,7 +50,7 @@ public class CsvWriter {
         }
     }
 
-    private static BigDecimal calculateRevenue(Map<Long, ExportOrders> ordersMap) {
+    private static BigDecimal calculateRevenue(Map<Long, ExportOrder> ordersMap) {
         BigDecimal result = BigDecimal.ONE;
         for (var order : ordersMap.entrySet()) {
             BigDecimal value = order.getValue().getValue();
@@ -61,7 +61,7 @@ public class CsvWriter {
         return result;
     }
 
-    private static BigDecimal calculateBalance(Map<Long, ExportOrders> ordersMap) {
+    private static BigDecimal calculateBalance(Map<Long, ExportOrder> ordersMap) {
         BigDecimal result = BigDecimal.ONE;
         for (var order : ordersMap.entrySet()) {
             result = result.add(order.getValue().getValue());
