@@ -1,6 +1,7 @@
 package com.alevel.java.nix.dzenmoney.model;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class ExportOrder {
 
@@ -40,6 +41,22 @@ public class ExportOrder {
     }
 
     public void addCategory(String category) {
-        this.category = this.category + "," + category;
+        this.category = this.category + "|" + category;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ExportOrder)) return false;
+        ExportOrder that = (ExportOrder) o;
+        return getId().equals(that.getId()) &&
+                getInstance().equals(that.getInstance()) &&
+                getValue().equals(that.getValue()) &&
+                getCategory().equals(that.getCategory());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getInstance(), getValue(), getCategory());
     }
 }

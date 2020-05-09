@@ -25,9 +25,10 @@ public class DzenMoneyApp {
         cfg.getProperties().setProperty("hibernate.connection.username", args[1]);
         cfg.getProperties().setProperty("hibernate.connection.password", args[2]);
         ConsoleMenu menu = new ConsoleMenu();
+        String url = cfg.getProperties().get("hibernate.connection.url").toString();
         try (SessionFactory sessionFactory = cfg.buildSessionFactory()) {
             InitDatabase.load(sessionFactory, args[0], "/init_tables.sql", InitDatabase.class);
-            menu.run(sessionFactory, args[1], args[2], "./module-three/output.csv");
+            menu.run(sessionFactory, args[1], args[2], "./module-three/output.csv", url);
         } catch (IOException e) {
             logger.error(e.getMessage());
             throw new UncheckedIOException(e);

@@ -12,7 +12,7 @@ import java.util.Map;
 public class JdbcDzenMoney {
     private static final Logger logger = LoggerFactory.getLogger(JdbcDzenMoney.class);
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/dzenmoney";
+    private static String DB_URL = "jdbc:mysql://localhost:3306/dzenmoney";
 
     private final String DB_USR;
 
@@ -20,7 +20,8 @@ public class JdbcDzenMoney {
 
     private Connection connection;
 
-    public JdbcDzenMoney(String username, String password) {
+    public JdbcDzenMoney(String url, String username, String password) {
+        DB_URL = url;
         DB_USR = username;
         DB_PASSWORD = password;
         establishConnection();

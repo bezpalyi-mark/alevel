@@ -22,10 +22,10 @@ public class ConsoleMenu {
         view = new ConsoleMenuView();
     }
 
-    public void run(SessionFactory sessionFactory, String username, String password, String path) {
+    public void run(SessionFactory sessionFactory, String username, String password, String path, String url) {
         int input = 0;
         HibernateDzenMoney hiber = new HibernateDzenMoney(sessionFactory);
-        JdbcDzenMoney jdbc = new JdbcDzenMoney(username, password);
+        JdbcDzenMoney jdbc = new JdbcDzenMoney(url, username, password);
         while (input != 3) {
             try {
                 view.printStartMEnu();
