@@ -1,10 +1,13 @@
 package com.alevel.java.nix.threads;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.RandomAccessFile;
 
-public class ThreadReader {
-    public static void main(String[] args) throws IOException {
-        ConsoleReader reader = new ConsoleReader(System.in);
+public class ThreadFileWriter {
+    public void spyWrite(InputStream inputStream) throws IOException {
+        ConsoleReader reader = new ConsoleReader(inputStream);
         Thread thread = new Thread(reader);
         String input = "";
         File file = new File("./data/output.txt");
@@ -26,5 +29,9 @@ public class ThreadReader {
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static void main(String[] args) throws IOException {
+        new ThreadFileWriter().spyWrite(System.in);
     }
 }
