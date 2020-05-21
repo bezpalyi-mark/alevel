@@ -1,15 +1,15 @@
 package com.alevel.java.nix.threads;
 
-import java.io.InputStream;
+import java.io.Reader;
 import java.util.Scanner;
 
 public class ConsoleReader implements Runnable {
 
     private final StringBuilder input;
 
-    private final InputStream inputStream;
+    private final Reader inputStream;
 
-    public ConsoleReader(InputStream inputStream) {
+    public ConsoleReader(Reader inputStream) {
         input = new StringBuilder();
         this.inputStream = inputStream;
     }
