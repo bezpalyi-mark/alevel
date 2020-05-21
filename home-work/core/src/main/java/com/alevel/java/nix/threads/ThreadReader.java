@@ -4,7 +4,7 @@ import java.io.*;
 
 public class ThreadReader {
     public static void main(String[] args) throws IOException {
-        ConsoleReader reader = new ConsoleReader();
+        ConsoleReader reader = new ConsoleReader(System.in);
         Thread thread = new Thread(reader);
         String input = "";
         File file = new File("./data/output.txt");
