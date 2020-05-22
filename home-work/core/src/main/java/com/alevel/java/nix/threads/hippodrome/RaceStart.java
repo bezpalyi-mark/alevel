@@ -45,7 +45,7 @@ public class RaceStart {
         } else {
             System.out.println("Sorry, but you loose!");
         }
-        executor.shutdownNow();
+        executor.shutdown();
     }
 
     private static int getNumberChoice() {
