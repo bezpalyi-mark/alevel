@@ -15,6 +15,7 @@
         <module>hibernate-java-nix</module>
         <module>module-three</module>
         <module>jee-nix</module>
+        <module>todo-list</module>
     </modules>
 
 
