@@ -1,6 +1,6 @@
 package com.alevel.java.nix.todolist.entity.request;
 
-public class SaveListItem {
+public class SaveItem {
     private String text;
 
     private boolean done;

@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "list_item")
-public class ListItem {
+public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +16,7 @@ public class ListItem {
     @Column(nullable = false)
     private boolean done;
 
-    public ListItem() {
+    public Item() {
     }
 
     public Long getId() {
