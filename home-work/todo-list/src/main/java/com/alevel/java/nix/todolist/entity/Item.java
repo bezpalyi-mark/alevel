@@ -3,7 +3,7 @@ package com.alevel.java.nix.todolist.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "list_item")
+@Table(name = "items")
 public class Item {
 
     @Id
