@@ -16,6 +16,7 @@
         <module>module-three</module>
         <module>jee-nix</module>
         <module>todo-list</module>
+        <module>geronimo</module>
     </modules>
 
 
