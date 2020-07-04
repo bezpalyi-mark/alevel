@@ -15,6 +15,8 @@ public class Road {
     @OneToOne
     private Place to;
 
+    private Double weight;
+
     public Long getId() {
         return id;
     }
@@ -37,5 +39,13 @@ public class Road {
 
     public void setTo(Place to) {
         this.to = to;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
     }
 }
