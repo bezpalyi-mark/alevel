@@ -1,5 +1,6 @@
 package com.alevel.java.nix.geronimo.service;
 
+import com.alevel.java.nix.geronimo.entities.City;
 import com.alevel.java.nix.geronimo.entities.Place;
 import com.alevel.java.nix.geronimo.entities.request.SavePlace;
 
@@ -20,4 +21,6 @@ public interface PlaceCRUD {
     void deleteAll();
 
     Optional<Place> getByName(String name);
+
+    List<Place> getAllInCity(City city);
 }

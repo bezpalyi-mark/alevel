@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <title>Geronimo-nix</title>
+</head>
+<body>
+<header>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+        <h5 class="my-0 mr-md-auto font-weight-normal">Geronimo</h5>
+        <nav class="my-2 my-md-0 mr-md-3">
+            <!--            <a class="p-2 text-dark">Change city</a>-->
+            <a class="p-2 text-dark">Profile</a>
+        </nav>
+    </div>
+</header>
+<div class="container mt-5">
+    <h1>Welcome to the Geronimo!</h1>
+    <div class="row mb-5">
+        <h3 class="col-12">Go wherever you want!</h3>
+    </div>
+    <div class="row mb-5">
+        <h3 class="col-5">Please select the city you need</h3>
+    </div>
+
+    <div class="card-group">
+        <div th:with="Kharkov=${'Kharkov'}" class="card" style="width: 18rem;">
+            <img src="img/kharkiv.svg.png" class="card-img-top" alt="Kharkiv">
+            <div class="card-body">
+                <h5 class="card-title">Khar'kov</h5>
+                <p class="card-text">The second most populated city in Ukraine, an important industrial and scientific
+                    center of the country.</p>
+                <a th:href="@{'/places-in-city/' + ${Kharkov}}" class="btn btn-primary">Places</a>
+            </div>
+        </div>
+        <div th:with="Kiev=${'Kiev'}" class="card" style="width: 18rem;">
+            <img src="img/kiev.png" class="card-img-top" alt="Kiev">
+            <div class="card-body">
+                <h5 class="card-title">Kiev</h5>
+                <p class="card-text">The capital of Ukraine, located on the Dnieper River. The city is famous for its
+                    monuments of religious architecture and historical museums.</p>
+                <a th:href="@{'/places-in-city/' + ${Kiev}}" class="btn btn-primary">Places</a>
+            </div>
+        </div>
+
+        <div th:with="Lutsk=${'Lutsk'}" class="card" style="width: 18rem;">
+            <img src="img/lutsk.svg.png" class="card-img-top" alt="Lutsk">
+            <div class="card-body">
+                <h5 class="card-title">Lutsk</h5>
+                <p class="card-text">City on the Styr River in northwestern Ukraine. It is the administrative center of
+                    the Volyn Oblast (province) and the administrative center of the surrounding Lutsk Raion (district)
+                    within the oblast, though it is not a part of the raion.</p>
+                <a th:href="@{'/places-in-city/' + ${Lutsk}}" class="btn btn-primary">Places</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

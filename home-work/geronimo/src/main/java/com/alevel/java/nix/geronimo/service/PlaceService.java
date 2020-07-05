@@ -1,6 +1,7 @@
 package com.alevel.java.nix.geronimo.service;
 
 import com.alevel.java.nix.geronimo.entities.Category;
+import com.alevel.java.nix.geronimo.entities.City;
 import com.alevel.java.nix.geronimo.entities.Place;
 import com.alevel.java.nix.geronimo.entities.Rating;
 import com.alevel.java.nix.geronimo.entities.request.SavePlace;
@@ -79,6 +80,11 @@ public class PlaceService implements PlaceCRUD {
     @Override
     public Optional<Place> getByName(String name) {
         return placeRepository.findByName(name);
+    }
+
+    @Override
+    public List<Place> getAllInCity(City city) {
+        return placeRepository.findByCity(city);
     }
 
     private Rating getRating(String ratingName) {
