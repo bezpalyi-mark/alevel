@@ -20,6 +20,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.alevel.java.nix.module</groupId>
+            <artifactId>java-nix-module-two</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>

@@ -16,11 +16,49 @@
         </nav>
     </div>
 </header>
-<ul class="list-group">
-    <li th:each="place : ${places}" class="list-group-item d-flex justify-content-between align-items-center">
-        <span th:text="${place.name}">Text...</span>
-        <span th:text="${place.rating}" class="badge badge-primary badge-pill">Text...</span>
-    </li>
-</ul>
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th scope="col">id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Category</th>
+        <th scope="col">Rating</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="place : ${places}">
+        <th scope="row" th:text="${place.id}">Text...</th>
+        <td th:text="${place.name}">Text...</td>
+        <td th:text="${place.category.name}">Text...</td>
+        <td th:switch="${place.rating}">
+            <span th:case="${place.rating.GOOD}" class="badge badge-info badge-pill" th:text="${place.rating}">Text...</span>
+            <span th:case="${place.rating.EXCELLENT}" class="badge badge-success badge-pill" th:text="${place.rating}">Text...</span>
+            <span th:case="${place.rating.SATISFACTORILY}" class="badge badge-warning badge-pill"
+                  th:text="${place.rating}">Text...</span>
+            <span th:case="${place.rating.TERRIBLY}" class="badge badge-danger badge-pill" th:text="${place.rating}">Text...</span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="container mt-5">
+    <form class="form-signing" method="post">
+        <h3>Get shortest way between two places</h3>
+        <div class="row mb-5">
+            <div class="label-style"><label for="place_from">Enter id of beginning</label> <input id="place_from"
+                                                                                                  class="input-control"
+                                                                                                  type="number"
+                                                                                                  name="fromId"
+                                                                                                  placeholder="from place id"/>
+            </div>
+            <div class="label-style"><label for="password">Enter id of end</label><input id="password"
+                                                                                         class="input-control"
+                                                                                         type="number"
+                                                                                         name="toId"
+                                                                                         placeholder="to place id"/>
+            </div>
+            <div><input type="submit" class="form-button" value="Submit"/></div>
+        </div>
+    </form>
+</div>
 </body>
 </html>

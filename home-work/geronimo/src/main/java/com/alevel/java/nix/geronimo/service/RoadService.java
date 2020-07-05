@@ -62,6 +62,11 @@ public class RoadService implements RoadCRUD {
         roadRepository.deleteAll();
     }
 
+    @Override
+    public List<Road> getAllFrom(Place from) {
+        return roadRepository.findByFrom(from);
+    }
+
     private void setPlaces(Road road,SaveRoad request) {
         Optional<Place> placeFrom = placeService.getById(request.getFromId());
         Optional<Place> placeTo = placeService.getById(request.getToId());

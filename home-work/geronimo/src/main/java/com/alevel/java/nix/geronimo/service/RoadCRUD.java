@@ -1,5 +1,6 @@
 package com.alevel.java.nix.geronimo.service;
 
+import com.alevel.java.nix.geronimo.entities.Place;
 import com.alevel.java.nix.geronimo.entities.Road;
 import com.alevel.java.nix.geronimo.entities.request.SaveRoad;
 
@@ -18,4 +19,6 @@ public interface RoadCRUD {
     Optional<Road> deleteById(Long id);
 
     void deleteAll();
+
+    List<Road> getAllFrom(Place from);
 }
