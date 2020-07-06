@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Log in</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        body{
+            margin-top: 15%;
+        }
+        .form-container{
+            width: 100%;
+            max-width: 340px;
+            padding: 15px;
+            margin: auto;
+        }
+        .input-control{
+            display: block;
+            width: 100%;
+            height: calc(1.5em + .75rem + 2px);
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+        .form-button{
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+            padding: .5rem 1rem;
+            font-size: 1.25rem;
+            line-height: 1.5;
+            border-radius: .3rem;
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <form class="form-signing" action="/login" method="post">
+        <h1>Log In Here</h1>
+        <div class="label-style"><label for="user_name"> </label> <input id="user_name" class="input-control" type="text" name="username" placeholder="Enter login" autofocus/> </div>
+        <div class="label-style"><label for="password"> </label><input id="password" class="input-control" type="password" name="password" placeholder="Enter password"/> </div>
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+        <div><input type="submit" class="form-button" value="Sign In"/></div>
+        <div><a class="p-2 text-dark" href="/registration">Registration</a></div>
+        <div><a class="p-2 text-dark" href="/">To begin</a></div>
+    </form>
+</div>
+</body>
+</html>

@@ -12,7 +12,7 @@
         <h5 class="my-0 mr-md-auto font-weight-normal">Geronimo</h5>
         <nav class="my-2 my-md-0 mr-md-3">
             <a class="p-2 text-dark" href="/">Change city</a>
-            <a class="p-2 text-dark">Profile</a>
+            <a class="p-2 text-dark" href="/control-panel">Control Panel</a>
         </nav>
     </div>
 </header>
@@ -31,7 +31,8 @@
         <td th:text="${place.name}">Text...</td>
         <td th:text="${place.category.name}">Text...</td>
         <td th:switch="${place.rating}">
-            <span th:case="${place.rating.GOOD}" class="badge badge-info badge-pill" th:text="${place.rating}">Text...</span>
+            <span th:case="${place.rating.GOOD}" class="badge badge-info badge-pill"
+                  th:text="${place.rating}">Text...</span>
             <span th:case="${place.rating.EXCELLENT}" class="badge badge-success badge-pill" th:text="${place.rating}">Text...</span>
             <span th:case="${place.rating.SATISFACTORILY}" class="badge badge-warning badge-pill"
                   th:text="${place.rating}">Text...</span>

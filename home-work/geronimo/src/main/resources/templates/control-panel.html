@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit</title>
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>-->
+    <link rel="stylesheet" href="https://drvic10k.github.io/bootstrap-sortable/Contents/bootstrap-sortable.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.js"></script>
+    <script src="https://drvic10k.github.io/bootstrap-sortable/Scripts/bootstrap-sortable.js"></script>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+        <h5 class="my-0 mr-md-auto font-weight-normal">Geronimo</h5>
+        <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2 text-dark" href="/">Return to begin</a>
+                <form class="form-signing mb-2" th:action="@{/logout}" method="post">
+                    <input type="submit" class="form-button btn btn-outline-secondary" value="Sing out">
+                </form>
+        </nav>
+    </div>
+</header>
+<div class="container">
+    <h1>Places edit panel</h1>
+    <table class="table table-bordered sortable">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>Name</th>
+            <th>City</th>
+            <th>Category</th>
+            <th>Rating</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="place : ${places}">
+            <td th:text="${place.id}">Text...</td>
+            <td th:text="${place.name}">Text...</td>
+            <td th:text="${place.city.name}">Text...</td>
+            <td th:text="${place.category.name}">Text...</td>
+            <td th:text="${place.rating}">Text...</td>
+            <td class="td-button">
+                <form th:method="delete" th:action="@{'/places/' + ${place.id}}">
+                    <input type="hidden" name="_method" value="delete">
+                    <input type="submit" class="form-button btn btn-outline-secondary table-button"
+                           value="Удалить поле">
+                </form>
+            </td>
+            <td class="td-button">
+                <form th:method="PUT" th:action="@{/places/${place.id}}">
+                    <input type="button" class="form-button btn btn-outline-secondary table-button"
+                           data-target="#userChange" data-toggle="modal" value="Изменить поле">
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
