@@ -21,4 +21,6 @@ public interface RoadCRUD {
     void deleteAll();
 
     List<Road> getAllFrom(Place from);
+
+    List<Road> deleteRoadsWithPlace(Place place);
 }

@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface RoadRepository extends JpaRepository<Road, Long> {
     List<Road> findByFrom(Place from);
+    List<Road> deleteAllByFromOrTo(Place from, Place to);
 }

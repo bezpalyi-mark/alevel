@@ -1,4 +1,4 @@
-package com.alevel.java.nix.geronimo.controller;
+package com.alevel.java.nix.geronimo.controller.rest;
 
 import com.alevel.java.nix.geronimo.entities.Category;
 import com.alevel.java.nix.geronimo.entities.request.SaveCategory;

@@ -18,11 +18,11 @@ public class RoadService implements RoadCRUD {
 
     private final RoadRepository roadRepository;
 
-    private final PlaceService placeService;
+    private final PlaceCRUD placeCRUD;
 
-    public RoadService(RoadRepository roadRepository, PlaceService placeService) {
+    public RoadService(RoadRepository roadRepository, PlaceCRUD placeCRUD) {
         this.roadRepository = roadRepository;
-        this.placeService = placeService;
+        this.placeCRUD = placeCRUD;
     }
 
     @Override
@@ -67,9 +67,14 @@ public class RoadService implements RoadCRUD {
         return roadRepository.findByFrom(from);
     }
 
+    @Override
+    public List<Road> deleteRoadsWithPlace(Place place) {
+        return roadRepository.deleteAllByFromOrTo(place, place);
+    }
+
     private void setPlaces(Road road,SaveRoad request) {
-        Optional<Place> placeFrom = placeService.getById(request.getFromId());
-        Optional<Place> placeTo = placeService.getById(request.getToId());
+        Optional<Place> placeFrom = placeCRUD.getById(request.getFromId());
+        Optional<Place> placeTo = placeCRUD.getById(request.getToId());
         if(placeFrom.isEmpty()) {
             throw new PlaceNotFoundException(request.getFromId());
         }

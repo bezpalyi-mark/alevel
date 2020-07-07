@@ -3,29 +3,139 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Edit</title>
-<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>-->
+    <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>-->
     <link rel="stylesheet" href="https://drvic10k.github.io/bootstrap-sortable/Contents/bootstrap-sortable.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.js"></script>
     <script src="https://drvic10k.github.io/bootstrap-sortable/Scripts/bootstrap-sortable.js"></script>
+    <script src="assets/js/axios.min.js"></script>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
 </head>
 <body>
+<div id="ModalLoginForm" class="modal fade">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title">Create new place</h1>
+            </div>
+            <div class="modal-body">
+                <form method="GET" action="/control-panel" >
+                    <div class="form-group">
+                        <label class="control-label">Name</label>
+                        <div>
+                            <input id="newName" type="text" class="form-control input-lg" name="name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">City</label>
+                        <div>
+                            <input id="cityName" type="text" class="form-control input-lg" name="cityName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Category</label>
+                        <div>
+                            <input id="categoryName" type="text" class="form-control input-lg" name="categoryName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Rating</label>
+                        <div>
+                            <input id="ratingName" type="text" class="form-control input-lg" name="ratingName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <div class="checkbox">
+                                <label>
+                                    <input id="crossroads" type="checkbox" name="crossroads"> Is crossroads
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <button id="createButton" type="button" class="btn btn-success">Create</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <header>
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <div class="d-flex flex-column flex-md-row align-items-center px-md-4 mb-3 bg-white border-bottom shadow-sm">
         <h5 class="my-0 mr-md-auto font-weight-normal">Geronimo</h5>
         <nav class="my-2 my-md-0 mr-md-3">
-            <a class="p-2 text-dark" href="/">Return to begin</a>
-                <form class="form-signing mb-2" th:action="@{/logout}" method="post">
-                    <input type="submit" class="form-button btn btn-outline-secondary" value="Sing out">
-                </form>
+            <a class="btn btn-secondary" role="button" href="/">Return to begin</a>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#ModalLoginForm">
+                Create new place
+            </button>
+            <form class="form-signing mb-2" th:action="@{/logout}" method="post">
+                <input type="submit" class="btn btn-dark" value="Sing out">
+            </form>
         </nav>
     </div>
 </header>
 <div class="container">
     <h1>Places edit panel</h1>
+    <div class="container row mb-5">
+        <b class="col-12">Deleting:</b>
+        <div class="col-auto">
+            <input type="number" class="input-control" id="deleteInput" placeholder="place id">
+        </div>
+        <div>
+            <label class="col-auto"></label>
+            <input id="deleteButton" type="submit" class="form-button btn btn-outline-secondary table-button"
+                   value="Delete">
+        </div>
+        <div class="col-sm">
+            <form class="form-signing mb-2" method="get" action="/control-panel">
+                <label class="col-lg-9"></label>
+                <input id="reload1" type="submit" class="row-cols-6 form-button btn btn-outline-secondary"
+                       value="Reload">
+            </form>
+        </div>
+    </div>
+    <div>
+        <form>
+            <div class="container form-row">
+                <b class="col-12">Editing:</b>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Id" id="editId">
+                </div>
+                <div class="col-2">
+                    <input type="text" class="form-control" placeholder="Name" id="editName">
+                </div>
+                <div class="col-2">
+                    <input type="text" class="form-control" placeholder="City" id="editCity">
+                </div>
+                <div class="col-2">
+                    <input type="text" class="form-control" placeholder="Category" id="editCategory">
+                </div>
+                <div class="col-2">
+                    <input type="text" class="form-control" placeholder="Rating" id="editRating">
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="editCrossroads" value="option1">
+                    <label class="form-check-label" for="editCrossroads">is crossroads</label>
+                </div>
+                <label class="col-auto"></label>
+                <input id="editButton" type="submit" class="form-button btn btn-outline-secondary table-button"
+                       value="Edit">
+            </div>
+        </form>
+    </div>
+    <br>
+    <br>
     <table class="table table-bordered sortable">
         <thead>
         <tr>
@@ -38,27 +148,15 @@
         </thead>
         <tbody>
         <tr th:each="place : ${places}">
-            <td th:text="${place.id}">Text...</td>
+            <td id="placeId" th:text="${place.id}">Text...</td>
             <td th:text="${place.name}">Text...</td>
             <td th:text="${place.city.name}">Text...</td>
             <td th:text="${place.category.name}">Text...</td>
             <td th:text="${place.rating}">Text...</td>
-            <td class="td-button">
-                <form th:method="delete" th:action="@{'/places/' + ${place.id}}">
-                    <input type="hidden" name="_method" value="delete">
-                    <input type="submit" class="form-button btn btn-outline-secondary table-button"
-                           value="Удалить поле">
-                </form>
-            </td>
-            <td class="td-button">
-                <form th:method="PUT" th:action="@{/places/${place.id}}">
-                    <input type="button" class="form-button btn btn-outline-secondary table-button"
-                           data-target="#userChange" data-toggle="modal" value="Изменить поле">
-                </form>
-            </td>
         </tr>
         </tbody>
     </table>
 </div>
+<script src="edit.js"></script>
 </body>
 </html>

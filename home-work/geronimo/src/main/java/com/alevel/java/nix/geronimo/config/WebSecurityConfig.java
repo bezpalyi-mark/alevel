@@ -28,6 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers( "/css/**", "/img/**", "/fonts/**", "/scripts/**",
+                        "/places/*", "/roads/*", "/cities/*", "/categories/*",
                         "/registration", "/index", "/places-in-city/*", "/").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -37,7 +38,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .logout().logoutSuccessUrl("/")
-                .permitAll();
+                .permitAll()
+                .and()
+                .httpBasic();
     }
 
     @Override

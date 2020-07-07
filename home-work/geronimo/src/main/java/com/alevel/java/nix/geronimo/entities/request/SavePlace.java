@@ -10,17 +10,17 @@ public class SavePlace {
 
     private String cityName;
 
-    private boolean isCrossroads;
+    private Boolean crossroads;
 
     public SavePlace() {
     }
 
-    public SavePlace(String name, String categoryName, String ratingName, String cityName, boolean isCrossroads) {
+    public SavePlace(String name, String categoryName, String ratingName, String cityName, Boolean crossroads) {
         this.name = name;
         this.categoryName = categoryName;
         this.ratingName = ratingName;
         this.cityName = cityName;
-        this.isCrossroads = isCrossroads;
+        this.crossroads = crossroads;
     }
 
     public String getName() {
@@ -47,13 +47,13 @@ public class SavePlace {
         this.ratingName = ratingName;
     }
 
-    public boolean isCrossroads() {
-        return isCrossroads;
+    public Boolean isCrossroads() {
+        return crossroads;
     }
 
-    public void setCrossroads(boolean crossroads) {
-        isCrossroads = crossroads;
-    }
+//    public void setCrossroads(boolean crossroads) {
+//        isCrossroads = crossroads;
+//    }
 
     public String getCityName() {
         return cityName;
@@ -61,5 +61,13 @@ public class SavePlace {
 
     public void setCityName(String cityName) {
         this.cityName = cityName;
+    }
+
+    public Boolean getCrossroads() {
+        return crossroads;
+    }
+
+    public void setCrossroads(Boolean crossroads) {
+        this.crossroads = crossroads;
     }
 }

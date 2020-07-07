@@ -1,6 +1,23 @@
 CREATE DATABASE geronimo;
 USE geronimo;
 
+create table user
+(
+    id       bigint auto_increment
+        primary key,
+    active   bit          null,
+    password varchar(255) null,
+    username varchar(255) null
+);
+
+create table user_role
+(
+    user_id bigint       not null,
+    role    varchar(255) null,
+    constraint FK859n2jvi8ivhui0rl0esws6o
+        foreign key (user_id) references user (id)
+);
+
 create table category
 (
     id   bigint auto_increment

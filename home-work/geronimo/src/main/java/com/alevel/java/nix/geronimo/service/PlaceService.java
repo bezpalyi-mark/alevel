@@ -10,6 +10,7 @@ import com.alevel.java.nix.geronimo.exception.CityNotFoundException;
 import com.alevel.java.nix.geronimo.exception.NoSuchRatingException;
 import com.alevel.java.nix.geronimo.exception.PlaceNotFoundException;
 import com.alevel.java.nix.geronimo.repository.PlaceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -25,6 +26,8 @@ public class PlaceService implements PlaceCRUD {
     private final CategoryCRUD categoryCRUD;
 
     private final CityCRUD cityCRUD;
+
+    private RoadCRUD roadCRUD;
 
     public PlaceService(PlaceRepository placeRepository, CategoryCRUD categoryCRUD, CityCRUD cityCRUD) {
         this.placeRepository = placeRepository;
@@ -68,7 +71,9 @@ public class PlaceService implements PlaceCRUD {
     @Override
     public Optional<Place> deleteById(Long id) {
         Optional<Place> place = placeRepository.findById(id);
-        place.ifPresent(placeRepository::delete);
+        if(place.isEmpty()) throw new PlaceNotFoundException(id);
+        roadCRUD.deleteRoadsWithPlace(place.get());
+        placeRepository.delete(place.get());
         return place;
     }
 
@@ -101,5 +106,10 @@ public class PlaceService implements PlaceCRUD {
             throw new CategoryNotFoundException(categoryName);
         }
         return category.get();
+    }
+
+    @Autowired
+    public void setRoadCRUD(RoadCRUD roadCRUD) {
+        this.roadCRUD = roadCRUD;
     }
 }

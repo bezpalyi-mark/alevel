@@ -1,4 +1,12 @@
 USE geronimo;
+
+INSERT INTO user(id, active, password, username)
+VALUES (1, 1, '8C6976E5B5410415BDE908BD4DEE15DFB167A9C873FC4BB8A81F6F2AB448A918', 'admin'),
+       (2, 1, '04F8996DA763B7A969B1028EE3007569EAF3A635486DDAB211D512C85B9DF8FB', 'user');
+
+INSERT INTO user_role(user_id, role) VALUES (1, 'ADMIN'),
+                                            (2, 'USER');
+
 INSERT INTO city(id, name) VALUES (1, 'Kharkov'),
                                   (2, 'Kiev'),
                                   (3, 'Lutsk');
