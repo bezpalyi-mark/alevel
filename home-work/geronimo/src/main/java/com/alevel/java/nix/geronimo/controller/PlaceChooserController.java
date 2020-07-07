@@ -72,11 +72,13 @@ public class PlaceChooserController {
             }
             graph.addNode(entry.getValue());
         }
-        Graph.calculateShortestPathFromSource(graph, placeNodeMap.get(placeFrom.get()));
+        Graph.calculateShortestPathFromSource(placeNodeMap.get(placeFrom.get()));
         List<Node> shortestPath = placeNodeMap.get(placeTo.get()).getShortestPath();
         List<Place> shortestWay = shortestPath.stream().map(Node::getPlace).collect(Collectors.toList());
         shortestWay.add(placeTo.get());
         model.addAttribute("places", shortestWay);
+        model.addAttribute("message",
+                "Follow these steps in order to get there as quickly as possible.");
         return "/place-chooser";
     }
 

@@ -21,7 +21,7 @@ public class Graph {
         this.nodes = nodes;
     }
 
-    public static Graph calculateShortestPathFromSource(Graph graph, Node source) {
+    public static void calculateShortestPathFromSource(Node source) {
         source.setDistance(0);
 
         Set<Node> settledNodes = new HashSet<>();
@@ -29,7 +29,7 @@ public class Graph {
 
         unsettledNodes.add(source);
 
-        while (unsettledNodes.size() != 0) {
+        while (!unsettledNodes.isEmpty()) {
             Node currentNode = getLowestDistanceNode(unsettledNodes);
             unsettledNodes.remove(currentNode);
             for (Map.Entry< Node, Integer> adjacencyPair:
@@ -43,7 +43,6 @@ public class Graph {
             }
             settledNodes.add(currentNode);
         }
-        return graph;
     }
 
     private static Node getLowestDistanceNode(Set < Node > unsettledNodes) {
