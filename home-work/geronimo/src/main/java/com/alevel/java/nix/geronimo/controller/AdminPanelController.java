@@ -24,16 +24,4 @@ public class AdminPanelController {
         model.addAttribute("places", placeCRUD.getAll());
         return "control-panel";
     }
-
-    @PostMapping
-    public String updateAdminPanel(Model model) {
-        model.addAttribute("places", placeCRUD.getAll());
-        return "control-panel";
-    }
-
-    @DeleteMapping("/places/{id}")
-    public String deletePlace(@PathVariable Long id) {
-        System.out.println("Ooo, delete request! " + id);
-        return "control-panel";
-    }
 }

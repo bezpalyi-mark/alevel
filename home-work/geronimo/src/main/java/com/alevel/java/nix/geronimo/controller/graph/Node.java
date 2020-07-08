@@ -7,6 +7,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class-node for one point in graph.
+ */
 public class Node {
     private Place place;
 
@@ -14,6 +17,9 @@ public class Node {
 
     private Integer distance = Integer.MAX_VALUE;
 
+    /**
+     * Adjacency map 'To point' and 'distance'
+     */
     Map<Node, Integer> adjacentNodes = new HashMap<>();
 
     public void addDestination(Node destination, int distance) {

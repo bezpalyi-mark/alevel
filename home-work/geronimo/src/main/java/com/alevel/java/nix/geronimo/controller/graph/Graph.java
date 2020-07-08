@@ -5,6 +5,9 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Class for calculate shortest ways from one Node to another.
+ */
 public class Graph {
 
     private Set<Node> nodes = new HashSet<>();
@@ -21,6 +24,11 @@ public class Graph {
         this.nodes = nodes;
     }
 
+    /**
+     * Method for calculate shortest paths from source node
+     *
+     * @param source node to start from.
+     */
     public static void calculateShortestPathFromSource(Node source) {
         source.setDistance(0);
 
@@ -32,7 +40,7 @@ public class Graph {
         while (!unsettledNodes.isEmpty()) {
             Node currentNode = getLowestDistanceNode(unsettledNodes);
             unsettledNodes.remove(currentNode);
-            for (Map.Entry< Node, Integer> adjacencyPair:
+            for (Map.Entry<Node, Integer> adjacencyPair :
                     currentNode.getAdjacentNodes().entrySet()) {
                 Node adjacentNode = adjacencyPair.getKey();
                 Integer edgeWeight = adjacencyPair.getValue();
@@ -45,10 +53,16 @@ public class Graph {
         }
     }
 
-    private static Node getLowestDistanceNode(Set < Node > unsettledNodes) {
+    /**
+     * Method to get lowest distance node.
+     *
+     * @param unsettledNodes nodes that not set already.
+     * @return the node with the smallest distance from the specified number of uninstalled nodes.
+     */
+    private static Node getLowestDistanceNode(Set<Node> unsettledNodes) {
         Node lowestDistanceNode = null;
         int lowestDistance = Integer.MAX_VALUE;
-        for (Node node: unsettledNodes) {
+        for (Node node : unsettledNodes) {
             int nodeDistance = node.getDistance();
             if (nodeDistance < lowestDistance) {
                 lowestDistance = nodeDistance;
@@ -58,6 +72,13 @@ public class Graph {
         return lowestDistanceNode;
     }
 
+    /**
+     * Method compares the actual distance with the newly calculated, following a recently explored path.
+     *
+     * @param evaluationNode evaluated node.
+     * @param edgeWeigh      distance.
+     * @param sourceNode     current node.
+     */
     private static void calculateMinimumDistance(Node evaluationNode,
                                                  Integer edgeWeigh, Node sourceNode) {
         Integer sourceDistance = sourceNode.getDistance();

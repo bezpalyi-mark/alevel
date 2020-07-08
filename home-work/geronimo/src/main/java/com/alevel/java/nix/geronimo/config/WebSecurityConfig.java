@@ -18,7 +18,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
 
-
+    //additional urls that need to open without authorizing. need for tests
     @Value("${open.urls.security.config}")
     private String[] antMatchers;
 

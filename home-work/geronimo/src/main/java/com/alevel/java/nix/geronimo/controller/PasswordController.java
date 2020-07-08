@@ -6,10 +6,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Class for encoding passwords by sha256 standard
+ */
 public class PasswordController implements PasswordEncoder {
 
     private final Logger logger = LoggerFactory.getLogger(PasswordEncoder.class);
 
+    /**
+     * Method encodes password.
+     * @param charSequence string password.
+     * @return encoded password.
+     */
     @Override
     public String encode(CharSequence charSequence) {
         MessageDigest sha256;    // Chose algorithm
@@ -29,6 +37,12 @@ public class PasswordController implements PasswordEncoder {
         return builder.toString();
     }
 
+    /**
+     * Method for comparing passwords.
+     * @param charSequence first input password.
+     * @param s second input password.
+     * @return is passwords equals.
+     */
     @Override
     public boolean matches(CharSequence charSequence, String s) {
         MessageDigest sha256 = null;
