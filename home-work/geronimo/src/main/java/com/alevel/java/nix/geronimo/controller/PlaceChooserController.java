@@ -11,6 +11,7 @@ import com.alevel.java.nix.geronimo.service.CityCRUD;
 import com.alevel.java.nix.geronimo.service.PlaceCRUD;
 import com.alevel.java.nix.geronimo.service.RoadCRUD;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,9 @@ public class PlaceChooserController {
     private final PlaceCRUD placeCRUD;
 
     private final RoadCRUD roadCRUD;
+
+    @Value("${open.urls.security.config}")
+    private String[] antMatchers;
 
     @Autowired
     public PlaceChooserController(CityCRUD cityCRUD, PlaceCRUD placeCRUD, RoadCRUD roadCRUD) {

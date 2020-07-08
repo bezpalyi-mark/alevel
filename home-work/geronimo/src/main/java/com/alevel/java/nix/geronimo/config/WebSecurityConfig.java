@@ -3,6 +3,7 @@ package com.alevel.java.nix.geronimo.config;
 import com.alevel.java.nix.geronimo.controller.PasswordController;
 import com.alevel.java.nix.geronimo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -17,6 +18,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
 
+
+    @Value("${open.urls.security.config}")
+    private String[] antMatchers;
+
     @Autowired
     public WebSecurityConfig(UserService userService) {
         this.userService = userService;
@@ -27,8 +32,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers( "/css/**", "/img/**", "/fonts/**", "/scripts/**",
-                        "/places/**", "/roads/**", "/cities/**", "/categories/**",          //fix-me
                         "/registration", "/index", "/places-in-city/*", "/").permitAll()
+                .antMatchers(antMatchers).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
